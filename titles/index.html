@@ -2,17 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VHS Titles</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    h1 {
+      color: #f33;
+    }
+    h2 {
+      border-bottom: 1px solid #444;
+      margin-top: 2rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li a {
+      color: #ccc;
+      text-decoration: none;
+    }
+    li a:hover {
+      color: #fff;
+    }
+    #sort {
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
-<body style="background-color: #111; color: white; text-align: center; padding: 2rem;">
+<body>
   <h1>Browse VHS Titles</h1>
-  <ul style="list-style: none; padding: 0;">
-    <li><a href="elf.html" style="color: red;">Elf</a></li>
-    <li><a href="happy-gilmore.html" style="color: red;">Happy Gilmore</a></li>
-    <li><a href="shrek.html" style="color: red;">Shrek</a></li>
-    <li><a href="step-brothers.html" style="color: red;">Step Brothers</a></li>
-    <li><a href="the-mask.html" style="color: red;">The Mask</a></li>
-  </ul>
+
+  <label for="sort">Sort by:</label>
+  <select id="sort" onchange="sortTitles()">
+    <option value="az">A to Z</option>
+    <option value="za">Z to A</option>
+  </select>
+
+  <div id="genres">
+    <h2>Comedy</h2>
+    <ul class="genre comedy">
+      <li><a href="elf.html">Elf</a></li>
+      <li><a href="step-brothers.html">Step Brothers</a></li>
+      <li><a href="the-mask.html">The Mask</a></li>
+      <li><a href="happy-gilmore.html">Happy Gilmore</a></li>
+    </ul>
+
+    <h2>Animation</h2>
+    <ul class="genre animation">
+      <li><a href="shrek.html">Shrek</a></li>
+    </ul>
+  </div>
+
+<script>
+function sortTitles() {
+  const order = document.getElementById('sort').value;
+  const genreLists = document.querySelectorAll(".genre");
+
+  genreLists.forEach(list => {
+    const items = Array.from(list.querySelectorAll("li"));
+    items.sort((a, b) => {
+      const textA = a.textContent.toUpperCase();
+      const textB = b.textContent.toUpperCase();
+      return order === "az" ? textA.localeCompare(textB) : textB.localeCompare(textA);
+    });
+    items.forEach(li => list.appendChild(li));
+  });
+}
+</script>
 </body>
 </html>
