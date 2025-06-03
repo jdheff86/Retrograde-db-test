@@ -1,0 +1,30 @@
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 2rem;
+}
+.logo {
+    width: 250px;
+    margin-bottom: 1rem;
+}
+h1 {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+}
+.subtitle {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+.link-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: #e60012;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
