@@ -1,6 +1,23 @@
-☰
-RETROGRADE DATA BASE
-🔍
-Retrograde DB
-The Ultimate VHS Grading & Price Tracker
-Browse VHS Titles
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retrograde DB</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="menu-icon">☰</div>
+    <div class="site-title">RETROGRADE DATA BASE</div>
+    <div class="search-icon">🔍</div>
+  </header>
+
+  <main class="home-container">
+    <img src="assets/logo-dark.jpeg" alt="Retrograde DB Logo" class="main-logo" />
+    <h1 class="main-title">Retrograde DB</h1>
+    <p class="subtitle">The Ultimate VHS Grading & Price Tracker</p>
+    <a href="titles/index.html" class="cta-button">Browse VHS Titles</a>
+  </main>
+</body>
+</html>
