@@ -119,3 +119,25 @@ body {
   margin: 0 auto;
   padding: 2rem;
 }
+/* --- VHS Titles List --- */
+.titles-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.titles-list li {
+  margin: 1rem 0;
+}
+
+.titles-list a {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.titles-list a:hover {
+  color: #e50914;
+}
