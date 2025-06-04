@@ -63,4 +63,41 @@ body {
 
 .cta-button:hover {
   background-color: #b00610;
+}/* --- Dropdown Menu Styles --- */
+.dropdown-menu {
+  background-color: #111;
+  color: white;
+  position: absolute;
+  top: 60px; /* just below header */
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.dropdown-menu li {
+  margin: 1rem 0;
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  color: #ff4444;
+}
+
+.hidden {
+  display: none;
 }
