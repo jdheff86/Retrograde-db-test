@@ -141,3 +141,12 @@ body {
 .titles-list a:hover {
   color: #e50914;
 }
+.movie-data {
+  text-align: left;
+  margin: 2rem auto;
+  max-width: 600px;
+  background-color: #111;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
