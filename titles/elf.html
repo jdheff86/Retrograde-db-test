@@ -1,79 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elf – Retrograde DB</title>
-  <link rel="stylesheet" href="../styles/style.css" />
-</head>
 <body>
-  <!-- Header -->
   <header class="site-header">
     <div class="menu-icon" onclick="toggleDropdown()">☰</div>
     <div class="site-title">RETROGRADE DATA BASE</div>
     <div class="search-icon">🔍</div>
   </header>
 
-  <!-- Dropdown Navigation -->
   <nav id="dropdownMenu" class="dropdown-menu hidden">
     <ul>
       <li><a href="../index.html">Home</a></li>
       <li><a href="../titles/index.html">Browse VHS Titles</a></li>
-      <li><a href="../genres.html">Genres</a></li>
-      <li><a href="../pricing.html">Pricing Info</a></li>
-      <li><a href="../submit.html">Submit a Tape</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="#">Genres</a></li>
+      <li><a href="#">Pricing Info</a></li>
+      <li><a href="#">Submit a Tape</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Main Content -->
-  <main class="vhs-detail">
-    <div class="vhs-hero">
-      <img src="../assets/elf-vhs.jpg" alt="Elf VHS" class="vhs-image" />
-      <div class="vhs-meta">
-        <h1 class="vhs-title">Elf (2003)</h1>
-        <p class="vhs-genre">Genre: Comedy / Holiday</p>
-        <p class="vhs-info">Studio: New Line Cinema</p>
-        <p class="vhs-info">Runtime: 97 minutes</p>
-      </div>
-    </div>
-
-    <!-- Price Table -->
-    <section class="vhs-pricing">
-      <h2>Graded VHS Pricing</h2>
-      <table>
-        <tr><th>Grade</th><th>Estimated Value</th></tr>
-        <tr><td>Raw</td><td>$55.00</td></tr>
-        <tr><td>7.0</td><td>$80.00</td></tr>
-        <tr><td>7.5</td><td>$95.00</td></tr>
-        <tr><td>8.0</td><td>$130.00</td></tr>
-        <tr><td>8.5</td><td>$160.00</td></tr>
-        <tr><td>9.0</td><td>$200.00</td></tr>
-        <tr><td>9.5</td><td>$240.00</td></tr>
-        <tr><td>10.0</td><td>$300.00</td></tr>
-      </table>
-    </section>
-
-    <!-- Optional Data Section -->
-    <section class="vhs-analytics">
-      <h2>Market Insights</h2>
-      <ul>
-        <li>🛒 <strong>Last Sold:</strong> May 30, 2025 (8.0 Grade) for $129.99</li>
-        <li>📈 <strong>Average Sale Price (Past 90 Days):</strong> $114.00</li>
-        <li>📦 <strong>Total Sales Tracked:</strong> 17</li>
-        <li>🔗 <strong>External Links:</strong> 
-          <a href="https://www.ebay.com/sch/i.html?_nkw=elf+vhs+sealed" target="_blank">eBay</a> | 
-          <a href="https://130point.com" target="_blank">130Point</a>
-        </li>
-      </ul>
-    </section>
+  <main class="home-container">
+    <h1 class="main-title">Elf</h1>
+    <img src="../assets/placeholder-red-vhs.png" alt="Elf VHS" class="main-logo">
+    <p class="subtitle">Pricing data coming soon.</p>
+    <a href="../titles/index.html" class="cta-button">← Back to Titles</a>
   </main>
 
-  <!-- Script -->
   <script>
     function toggleDropdown() {
-      document.getElementById("dropdownMenu").classList.toggle("hidden");
+      const menu = document.getElementById("dropdownMenu");
+      menu.classList.toggle("hidden");
     }
   </script>
 </body>
-</html>
