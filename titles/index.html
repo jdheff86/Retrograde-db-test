@@ -2,77 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VHS Titles</title>
-  <style>
-    body {
-      background-color: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-    }
-    h1 {
-      color: #f33;
-    }
-    h2 {
-      border-bottom: 1px solid #444;
-      margin-top: 2rem;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li a {
-      color: #ccc;
-      text-decoration: none;
-    }
-    li a:hover {
-      color: #fff;
-    }
-    #sort {
-      margin-bottom: 1rem;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse VHS Titles - Retrograde DB</title>
+  <link rel="stylesheet" href="../styles/style.css" />
 </head>
 <body>
-  <h1>Browse VHS Titles</h1>
+  <header class="site-header">
+    <div class="menu-icon">☰</div>
+    <div class="site-title">RETROGRADE DATA BASE</div>
+    <div class="search-icon">🔍</div>
+  </header>
 
-  <label for="sort">Sort by:</label>
-  <select id="sort" onchange="sortTitles()">
-    <option value="az">A to Z</option>
-    <option value="za">Z to A</option>
-  </select>
+  <nav id="dropdownMenu" class="dropdown-menu hidden">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Browse VHS Titles</a></li>
+      <li><a href="genres.html">Genres</a></li>
+      <li><a href="pricing.html">Pricing Info</a></li>
+      <li><a href="submit.html">Submit a Tape</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-  <div id="genres">
-    <h2>Comedy</h2>
-    <ul class="genre comedy">
+  <main class="home-container">
+    <h1 class="main-title">All VHS Titles</h1>
+    <p class="subtitle">Browse all indexed VHS releases in the database</p>
+
+    <ul style="list-style: none; padding: 0; font-size: 1.2rem;">
       <li><a href="elf.html">Elf</a></li>
-      <li><a href="step-brothers.html">Step Brothers</a></li>
-      <li><a href="the-mask.html">The Mask</a></li>
-      <li><a href="happy-gilmore.html">Happy Gilmore</a></li>
-    </ul>
-
-    <h2>Animation</h2>
-    <ul class="genre animation">
+      <li><a href="happygilmore.html">Happy Gilmore</a></li>
       <li><a href="shrek.html">Shrek</a></li>
+      <li><a href="stepbrothers.html">Step Brothers</a></li>
+      <li><a href="themask.html">The Mask</a></li>
     </ul>
-  </div>
+  </main>
 
-<script>
-function sortTitles() {
-  const order = document.getElementById('sort').value;
-  const genreLists = document.querySelectorAll(".genre");
-
-  genreLists.forEach(list => {
-    const items = Array.from(list.querySelectorAll("li"));
-    items.sort((a, b) => {
-      const textA = a.textContent.toUpperCase();
-      const textB = b.textContent.toUpperCase();
-      return order === "az" ? textA.localeCompare(textB) : textB.localeCompare(textA);
-    });
-    items.forEach(li => list.appendChild(li));
-  });
-}
-</script>
+  <script src="../scripts/menu.js"></script>
 </body>
 </html>

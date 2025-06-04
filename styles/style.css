@@ -63,12 +63,14 @@ body {
 
 .cta-button:hover {
   background-color: #b00610;
-}/* --- Dropdown Menu Styles --- */
+}
+
+/* --- Dropdown Menu Styles --- */
 .dropdown-menu {
   background-color: #111;
   color: white;
   position: absolute;
-  top: 60px; /* just below header */
+  top: 60px;
   left: 0;
   width: 100%;
   z-index: 1000;
@@ -100,4 +102,20 @@ body {
 
 .hidden {
   display: none;
+}
+
+/* --- VHS Title Page Image --- */
+.title-page-image {
+  width: 300px;
+  max-width: 80%;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+}
+
+/* --- Page container for movie title pages --- */
+.title-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
 }
