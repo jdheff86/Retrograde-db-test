@@ -1,4 +1,4 @@
-/* Global styles */
+/* Global site styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -6,7 +6,7 @@ body {
   color: #fff;
 }
 
-/* Header */
+/* Header styling */
 header {
   background-color: #111;
   padding: 20px;
@@ -23,7 +23,7 @@ header .db-tag {
   color: #f04;
 }
 
-/* Navigation links */
+/* Navigation */
 nav {
   margin-top: 10px;
 }
@@ -39,63 +39,62 @@ nav a:hover {
   color: #fff;
 }
 
-/* Two-column layout for VHS detail pages */
-main.two-column {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  padding: 20px;
-  align-items: flex-start;
-}
-
-/* Left column - image + metadata */
-.image-column {
-  flex: 1;
+/* Homepage */
+.home-container {
   text-align: center;
-  min-width: 250px;
+  padding: 40px;
 }
 
-.image-column img {
+.home-container img {
+  width: 300px;
+  max-width: 80%;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #0ff;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* VHS Detail Page layout */
+main {
+  padding: 20px;
+  max-width: 700px;
+  margin: auto;
+}
+
+main img {
   width: 100%;
-  max-width: 250px;
-  border: 2px solid #444;
-  border-radius: 4px;
-  margin-bottom: 12px;
+  max-width: 300px;
+  display: block;
+  margin: 0 auto 20px;
 }
 
-.image-column p {
-  margin: 6px 0;
-  font-size: 0.95rem;
+p {
+  font-size: 1rem;
+  line-height: 1.6;
   color: #ccc;
 }
 
-/* Right column - chart and description */
-.details-column {
-  flex: 2;
-  min-width: 300px;
+/* Table for pricing */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  color: #fff;
 }
 
-.details-column h2 {
-  margin-top: 0;
-  font-size: 1.5rem;
-}
-
-.chart-placeholder {
-  background: #222;
-  border: 1px dashed #666;
-  height: 200px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-style: italic;
-}
-
-/* Description under chart */
-.description {
-  font-size: 1rem;
-  color: #bbb;
-  line-height: 1.6;
-  max-width: 700px;
-}
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid
