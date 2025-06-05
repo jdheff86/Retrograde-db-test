@@ -82,6 +82,118 @@ body {
 
 /* --- Title and Subtitle Styling --- */
 .main-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.subtitle {
   font-size: 1.2rem;
-  font-weight: 600;
- 
+  margin-bottom: 1.5rem;
+  color: #ccc;
+}
+
+/* --- VHS Image Block --- */
+.main-logo,
+.title-page-image {
+  width: 200px;
+  max-width: 80%;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+}
+
+/* --- Button Styling --- */
+.cta-button {
+  display: inline-block;
+  background-color: #e50914;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #b00610;
+}
+
+/* --- VHS Titles List Page --- */
+.titles-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.titles-list li {
+  margin: 1rem 0;
+}
+
+.titles-list a {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.titles-list a:hover {
+  color: #e50914;
+}
+
+/* --- VHS Detail Layout --- */
+.vhs-detail-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.vhs-image img {
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* --- VHS Info Block --- */
+.vhs-info {
+  flex: 1;
+  text-align: left;
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-top: 10px;
+}
+
+/* --- Price Table Section --- */
+.price-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.price-table {
+  margin: 0 auto 2rem;
+  width: 100%;
+  max-width: 500px;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.price-table th, .price-table td {
+  border: 1px solid #666;
+  padding: 10px;
+  text-align: center;
+}
+
+.price-table th {
+  background-color: #111;
+  color: #ff4444;
+}
+
+.price-table tr:nth-child(even) {
+  background-color: #222;
+}
