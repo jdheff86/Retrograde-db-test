@@ -49,13 +49,18 @@ async function getRandomComedyMovie() {
   const randomIndex = Math.floor(Math.random() * movies.length);
   const movie = movies[randomIndex];
 
-  if (!movie || !movie.title || !movie.release_date) return null;
+  if (!movie || !movie.title || !movie.release_date) {
+    console.log("⚠️  Invalid movie data fetched, skipping.");
+    return null;
+  }
 
   const releaseYear = parseInt(movie.release_date.split('-')[0]);
   const slug = slugify(`${movie.title}-${releaseYear}`);
   const outputFile = path.join(OUTPUT_DIR, `${slug}.html`);
 
-  // Delete if already exists but post-2006
+  // ✨ Show what movie was fetched
+  console.log(`🎬 Fetched: ${movie.title} (${releaseYear})`);
+
   if (releaseYear > 2006) {
     if (fs.existsSync(outputFile)) {
       fs.unlinkSync(outputFile);
@@ -76,6 +81,8 @@ async function getRandomComedyMovie() {
 }
 
 async function main() {
+  console.log("🚀 Starting random VHS title generation..."); // ✨ Start message
+
   let existing = [];
   if (fs.existsSync(EXISTING_TITLES_FILE)) {
     existing = JSON.parse(fs.readFileSync(EXISTING_TITLES_FILE));
@@ -99,6 +106,8 @@ async function main() {
   }
 
   fs.writeFileSync(EXISTING_TITLES_FILE, JSON.stringify(existing, null, 2));
+
+  console.log("✅ Script finished running."); // ✨ Done message
 }
 
 main();
