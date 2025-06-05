@@ -23,7 +23,23 @@ header .db-tag {
   color: #f04;
 }
 
-/* Two-column layout for VHS title pages */
+/* Navigation links */
+nav {
+  margin-top: 10px;
+}
+
+nav a {
+  margin: 0 15px;
+  color: #0ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+/* Two-column layout for VHS detail pages */
 main.two-column {
   display: flex;
   flex-wrap: wrap;
@@ -32,7 +48,7 @@ main.two-column {
   align-items: flex-start;
 }
 
-/* Left column - image + year/genre */
+/* Left column - image + metadata */
 .image-column {
   flex: 1;
   text-align: center;
@@ -82,15 +98,4 @@ main.two-column {
   color: #bbb;
   line-height: 1.6;
   max-width: 700px;
-}
-
-/* Homepage nav link */
-nav a {
-  color: #0ff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #fff;
 }
