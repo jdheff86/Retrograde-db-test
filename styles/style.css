@@ -1,100 +1,193 @@
-/* Global site styles */
+/* --- Base Reset & Typography --- */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   background-color: #000;
   color: #fff;
+  text-align: center;
 }
 
-/* Header styling */
-header {
+/* --- Header & Navigation --- */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #111;
-  padding: 20px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-}
-
-header .db-tag {
-  font-size: 1.2rem;
-  color: #f04;
-}
-
-/* Navigation */
-nav {
-  margin-top: 10px;
-}
-
-nav a {
-  margin: 0 15px;
-  color: #0ff;
-  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
   font-weight: bold;
+  font-size: 18px;
 }
 
-nav a:hover {
-  color: #fff;
+.menu-icon,
+.search-icon {
+  cursor: pointer;
+  font-size: 20px;
 }
 
-/* Homepage */
-.home-container {
+.site-title {
+  flex-grow: 1;
   text-align: center;
-  padding: 40px;
+  font-size: 18px;
 }
 
-.home-container img {
-  width: 300px;
-  max-width: 80%;
-  margin-bottom: 20px;
+.dropdown-menu {
+  background-color: #111;
+  color: white;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.dropdown-menu li {
+  margin: 1rem 0;
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  color: #ff4444;
+}
+
+.hidden {
+  display: none;
+}
+
+/* --- Main Container --- */
+.home-container {
+  padding: 40px 20px;
+}
+
+.title-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* --- Title and Subtitle Styling --- */
+.main-title {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
 }
 
 .subtitle {
   font-size: 1.2rem;
-  color: #aaa;
-}
-
-.cta-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #0ff;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-/* VHS Detail Page layout */
-main {
-  padding: 20px;
-  max-width: 700px;
-  margin: auto;
-}
-
-main img {
-  width: 100%;
-  max-width: 300px;
-  display: block;
-  margin: 0 auto 20px;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.6;
+  margin-bottom: 1.5rem;
   color: #ccc;
 }
 
-/* Table for pricing */
-table {
-  width: 100%;
+/* --- VHS Image Block --- */
+.main-logo,
+.title-page-image {
+  width: 200px;
+  max-width: 80%;
   margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+}
+
+/* --- Button Styling --- */
+.cta-button {
+  display: inline-block;
+  background-color: #e50914;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #b00610;
+}
+
+/* --- VHS Titles List Page --- */
+.titles-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.titles-list li {
+  margin: 1rem 0;
+}
+
+.titles-list a {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.titles-list a:hover {
+  color: #e50914;
+}
+
+/* --- Side-by-Side VHS Detail Layout --- */
+.vhs-detail-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.vhs-image img {
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.vhs-info {
+  flex: 1;
+  text-align: left;
+}
+
+/* --- Price Table Section --- */
+.price-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.price-table {
+  margin: 0 auto 2rem;
+  width: 100%;
+  max-width: 500px;
   border-collapse: collapse;
   color: #fff;
 }
 
-th, td {
-  padding: 8px;
-  border-bottom: 1px solid #444;
+.price-table th, .price-table td {
+  border: 1px solid #666;
+  padding: 10px;
+  text-align: center;
+}
+
+.price-table th {
+  background-color: #111;
+  color: #ff4444;
+}
+
+.price-table tr:nth-child(even) {
+  background-color: #222;
+}
