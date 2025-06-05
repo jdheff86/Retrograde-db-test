@@ -82,8 +82,9 @@ body {
 
 /* --- Title and Subtitle Styling --- */
 .main-title {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  font-size: 1.4rem;
+  font-weight: bolder;
+  margin: 1rem 0;
 }
 
 .subtitle {
