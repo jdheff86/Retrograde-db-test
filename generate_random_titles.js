@@ -4,7 +4,7 @@ const https = require("https");
 
 const TMDB_API_KEY = "af1cc8eba723466ddbf55ab404c953e0";
 const MOVIE_COUNT = 6;
-const TITLES_DIR = path.join(__dirname, "../titles");
+const TITLES_DIR = path.join(__dirname, "titles");
 const INDEX_HTML = path.join(TITLES_DIR, "index.html");
 
 function fetch(url) {
@@ -140,7 +140,8 @@ ${links}
     try {
       const pick = await getRandomMovie();
       const details = await getMovieDetails(pick.id);
-      const filename = slugify(details.title, details.release_date.split("-")[0]);
+      const year = details.release_date?.split("-")[0];
+      const filename = slugify(details.title, year);
 
       if (!existing.has(filename)) {
         createHtml(details, filename);
