@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const https = require("https");
 
-const TMDB_API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your TMDB API key
+const TMDB_API_KEY = 'af1cc8eba723466ddbf55ab404c953e0'; // ✅ YOUR real TMDB API key
 const MOVIE_COUNT = 6;
 const EXISTING_TITLES_FILE = path.join(__dirname, 'existing_titles.json');
 const OUTPUT_DIR = path.join(__dirname, 'pages');
@@ -58,7 +58,6 @@ async function getRandomComedyMovie() {
   const slug = slugify(`${movie.title}-${releaseYear}`);
   const outputFile = path.join(OUTPUT_DIR, `${slug}.html`);
 
-  // ✨ Show what movie was fetched
   console.log(`🎬 Fetched: ${movie.title} (${releaseYear})`);
 
   if (releaseYear > 2006) {
@@ -81,7 +80,7 @@ async function getRandomComedyMovie() {
 }
 
 async function main() {
-  console.log("🚀 Starting random VHS title generation..."); // ✨ Start message
+  console.log("🚀 Starting random VHS title generation...");
 
   let existing = [];
   if (fs.existsSync(EXISTING_TITLES_FILE)) {
@@ -106,8 +105,7 @@ async function main() {
   }
 
   fs.writeFileSync(EXISTING_TITLES_FILE, JSON.stringify(existing, null, 2));
-
-  console.log("✅ Script finished running."); // ✨ Done message
+  console.log("✅ Script finished running.");
 }
 
 main();
