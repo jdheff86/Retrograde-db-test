@@ -4,14 +4,9 @@ const https = require("https");
 
 const TMDB_API_KEY = "af1cc8eba723466ddbf55ab404c953e0";
 const MOVIE_COUNT = 6;
-
 const TITLES_DIR = path.join(__dirname, "titles");
-const INDEX_HTML = path.join(TITLES_DIR, "index.html");
 const QUARANTINE_DIR = path.join(__dirname, "titles_quarantine");
-
-if (!fs.existsSync(QUARANTINE_DIR)) {
-  fs.mkdirSync(QUARANTINE_DIR);
-}
+const INDEX_HTML = path.join(TITLES_DIR, "index.html");
 
 function fetch(url) {
   return new Promise((resolve, reject) => {
@@ -34,6 +29,28 @@ function listExistingTitles() {
     .readdirSync(TITLES_DIR)
     .filter((f) => f.endsWith(".html") && f !== "index.html")
     .map((file) => file.replace(".html", ""));
+}
+
+function moveToQuarantine(filename) {
+  const src = path.join(TITLES_DIR, filename);
+  const dest = path.join(QUARANTINE_DIR, filename);
+  fs.renameSync(src, dest);
+  console.log(`🧹 Moved invalid file to quarantine: ${filename}`);
+}
+
+function cleanInvalidTitles() {
+  const files = fs.readdirSync(TITLES_DIR);
+  for (const file of files) {
+    if (file.endsWith(".html") && file !== "index.html") {
+      const match = file.match(/-(\d{4})\.html$/);
+      if (match) {
+        const year = parseInt(match[1]);
+        if (year > 2006) {
+          moveToQuarantine(file);
+        }
+      }
+    }
+  }
 }
 
 async function getRandomMovie() {
@@ -138,35 +155,23 @@ ${links}
   console.log(`✅ index.html updated`);
 }
 
-function isCorruptedHTML(filePath) {
-  const content = fs.readFileSync(filePath, "utf8");
-  return !content.includes("<!DOCTYPE html>") || !content.includes("<title>");
-}
-
-function quarantineCorruptTitles() {
-  const allFiles = fs
-    .readdirSync(TITLES_DIR)
-    .filter((f) => f.endsWith(".html") && f !== "index.html");
-
-  allFiles.forEach((file) => {
-    const fullPath = path.join(TITLES_DIR, file);
-    if (isCorruptedHTML(fullPath)) {
-      const quarantinePath = path.join(QUARANTINE_DIR, file);
-      fs.renameSync(fullPath, quarantinePath);
-      console.log(`⚠️ Moved to quarantine: ${file}`);
-    }
-  });
-}
-
 (async () => {
+  // Clean invalid .html files first
+  cleanInvalidTitles();
+
   const existing = new Set(listExistingTitles());
   let added = 0;
 
   while (added < MOVIE_COUNT) {
     try {
       const pick = await getRandomMovie();
+      const year = parseInt(pick.release_date?.slice(0, 4));
+      if (!year || year > 2006) {
+        console.log(`❌ Skipped ${pick.title} (invalid or too recent: ${year})`);
+        continue;
+      }
+
       const details = await getMovieDetails(pick.id);
-      const year = details.release_date?.split("-")[0] || "unknown";
       const filename = slugify(details.title, year);
 
       if (!existing.has(filename)) {
@@ -181,7 +186,5 @@ function quarantineCorruptTitles() {
     }
   }
 
-  // Clean bad files first, then update
-  quarantineCorruptTitles();
   updateIndexPage([...existing]);
 })();
