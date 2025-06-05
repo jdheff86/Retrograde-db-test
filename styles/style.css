@@ -1,3 +1,4 @@
+/* --- Base Reset & Typography --- */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -6,6 +7,7 @@ body {
   text-align: center;
 }
 
+/* --- Header & Navigation --- */
 .site-header {
   display: flex;
   justify-content: space-between;
@@ -29,43 +31,6 @@ body {
   font-size: 18px;
 }
 
-.home-container {
-  padding: 40px 20px;
-}
-
-.main-logo {
-  width: 200px;
-  margin-bottom: 20px;
-}
-
-.main-title {
-  font-size: 2.5rem;
-  margin: 0.5rem 0;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #ccc;
-}
-
-.cta-button {
-  display: inline-block;
-  background-color: #e50914;
-  color: #fff;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-
-.cta-button:hover {
-  background-color: #b00610;
-}
-
-/* --- Dropdown Menu Styles --- */
 .dropdown-menu {
   background-color: #111;
   color: white;
@@ -104,94 +69,27 @@ body {
   display: none;
 }
 
-/* --- VHS Title Page Image --- */
-.title-page-image {
-  width: 300px;
-  max-width: 80%;
-  margin-top: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
+/* --- Main Container --- */
+.home-container {
+  padding: 40px 20px;
 }
 
-/* --- Page container for movie title pages --- */
 .title-page-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
 }
-/* --- VHS Titles List --- */
-.titles-list {
-  list-style: none;
-  padding: 0;
-  margin: 2rem 0;
+
+/* --- Title and Subtitle Styling --- */
+.main-title {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
 }
 
-.titles-list li {
-  margin: 1rem 0;
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #ccc;
 }
 
-.titles-list a {
-  color: white;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.titles-list a:hover {
-  color: #e50914;
-}
-.movie-data {
-  text-align: left;
-  margin: 2rem auto;
-  max-width: 600px;
-  background-color: #111;
-  padding: 1rem 2rem;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
-}.vhs-detail-layout {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.vhs-image img {
-  width: 200px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.vhs-info {
-  flex: 1;
-  text-align: left;
-}
-
-.price-heading {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.price-table {
-  margin: 0 auto 2rem;
-  width: 100%;
-  max-width: 500px;
-  border-collapse: collapse;
-  color: #fff;
-}
-
-.price-table th, .price-table td {
-  border: 1px solid #666;
-  padding: 10px;
-  text-align: center;
-}
-
-.price-table th {
-  background-color: #111;
-  color: #ff4444;
-}
-
-.price-table tr:nth-child(even) {
-  background-color: #222;
-}
+/* --- VHS Image Block
