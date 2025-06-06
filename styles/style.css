@@ -31,46 +31,13 @@ body {
   font-size: 18px;
 }
 
-.dropdown-menu {
-  background-color: #111;
-  color: white;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+/* --- Main Container --- */
+.home-container {
+  padding: 40px 20px;
 }
 
-.dropdown-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-.dropdown-menu li {
-  margin: 1rem 0;
-}
-
-.dropdown-menu a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: color 0.2s ease;
-}
-
-.dropdown-menu a:hover {
-  color: #ff4444;
-}
-
-.hidden {
-  display: none;
-}
-
-/* --- Home Page Layout --- */
-.page-home .main-logo {
+/* --- Logo and Titles --- */
+.main-logo {
   width: 200px;
   max-width: 80%;
   margin-top: 20px;
@@ -78,19 +45,20 @@ body {
   border-radius: 8px;
 }
 
-.page-home .main-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+.main-title {
+  font-size: 1.4rem;
+  font-weight: bolder;
   margin: 1rem 0;
 }
 
-.page-home .subtitle {
+.subtitle {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   color: #ccc;
 }
 
-.page-home .cta-button {
+/* --- Button Styling --- */
+.cta-button {
   display: inline-block;
   background-color: #e50914;
   color: #fff;
@@ -102,7 +70,7 @@ body {
   transition: background 0.3s ease;
 }
 
-.page-home .cta-button:hover {
+.cta-button:hover {
   background-color: #b00610;
 }
 
@@ -130,19 +98,13 @@ body {
 }
 
 /* --- VHS Detail Page Layout --- */
-.page-title .main-title {
-  font-size: 1.4rem;
-  font-weight: bolder;
-  margin: 1rem 0;
+.title-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.page-title .subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  color: #ccc;
-}
-
-.page-title .vhs-detail-layout {
+.vhs-detail-layout {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
@@ -150,13 +112,13 @@ body {
   flex-wrap: wrap;
 }
 
-.page-title .vhs-image img {
+.vhs-image img {
   width: 200px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.page-title .vhs-info {
+.vhs-info {
   flex: 1;
   text-align: left;
   color: #ccc;
@@ -166,13 +128,13 @@ body {
 }
 
 /* --- Price Table Section --- */
-.page-title .price-heading {
+.price-heading {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   text-align: center;
 }
 
-.page-title .price-table {
+.price-table {
   margin: 0 auto 2rem;
   width: 100%;
   max-width: 500px;
@@ -180,18 +142,18 @@ body {
   color: #fff;
 }
 
-.page-title .price-table th,
-.page-title .price-table td {
+.price-table th,
+.price-table td {
   border: 1px solid #666;
   padding: 10px;
   text-align: center;
 }
 
-.page-title .price-table th {
+.price-table th {
   background-color: #111;
   color: #ff4444;
 }
 
-.page-title .price-table tr:nth-child(even) {
+.price-table tr:nth-child(even) {
   background-color: #222;
 }
