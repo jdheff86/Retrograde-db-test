@@ -69,43 +69,28 @@ body {
   display: none;
 }
 
-/* --- Main Container --- */
-.home-container {
-  padding: 40px 20px;
+/* --- Home Page Layout --- */
+.page-home .main-logo {
+  width: 200px;
+  max-width: 80%;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
 }
 
-.title-page-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* --- Title and Subtitle Styling --- */
-.main-title {
-  font-size: 1.4rem;
-  font-weight: bolder;
+.page-home .main-title {
+  font-size: 2.5rem;
+  font-weight: bold;
   margin: 1rem 0;
 }
 
-.subtitle {
+.page-home .subtitle {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   color: #ccc;
 }
 
-/* --- Logo Styling --- */
-.main-logo {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
-}
-
-/* --- Button Styling --- */
-.cta-button {
+.page-home .cta-button {
   display: inline-block;
   background-color: #e50914;
   color: #fff;
@@ -117,7 +102,7 @@ body {
   transition: background 0.3s ease;
 }
 
-.cta-button:hover {
+.page-home .cta-button:hover {
   background-color: #b00610;
 }
 
@@ -126,16 +111,15 @@ body {
   list-style: none;
   padding: 0;
   margin: 2rem 0;
-  text-align: center;
 }
 
 .titles-list li {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
 
 .titles-list a {
   color: white;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -145,8 +129,20 @@ body {
   color: #e50914;
 }
 
-/* --- VHS Detail Layout --- */
-.vhs-detail-layout {
+/* --- VHS Detail Page Layout --- */
+.page-title .main-title {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  margin: 1rem 0;
+}
+
+.page-title .subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #ccc;
+}
+
+.page-title .vhs-detail-layout {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
@@ -154,13 +150,13 @@ body {
   flex-wrap: wrap;
 }
 
-.vhs-image img {
+.page-title .vhs-image img {
   width: 200px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.vhs-info {
+.page-title .vhs-info {
   flex: 1;
   text-align: left;
   color: #ccc;
@@ -170,13 +166,13 @@ body {
 }
 
 /* --- Price Table Section --- */
-.price-heading {
+.page-title .price-heading {
   font-size: 1.5rem;
-  margin: 1.5rem 0 1rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-.price-table {
+.page-title .price-table {
   margin: 0 auto 2rem;
   width: 100%;
   max-width: 500px;
@@ -184,17 +180,18 @@ body {
   color: #fff;
 }
 
-.price-table th, .price-table td {
+.page-title .price-table th,
+.page-title .price-table td {
   border: 1px solid #666;
   padding: 10px;
   text-align: center;
 }
 
-.price-table th {
+.page-title .price-table th {
   background-color: #111;
   color: #ff4444;
 }
 
-.price-table tr:nth-child(even) {
+.page-title .price-table tr:nth-child(even) {
   background-color: #222;
 }
