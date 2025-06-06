@@ -31,56 +31,12 @@ body {
   font-size: 18px;
 }
 
-.dropdown-menu {
-  background-color: #111;
-  color: white;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.dropdown-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-.dropdown-menu li {
-  margin: 1rem 0;
-}
-
-.dropdown-menu a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: color 0.2s ease;
-}
-
-.dropdown-menu a:hover {
-  color: #ff4444;
-}
-
-.hidden {
-  display: none;
-}
-
 /* --- Main Container --- */
 .home-container {
   padding: 40px 20px;
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
-}
-
-.title-page-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
 }
 
 /* --- Title and Subtitle Styling --- */
@@ -96,9 +52,8 @@ body {
   color: #ccc;
 }
 
-/* --- Logo & VHS Images --- */
-.main-logo,
-.title-page-image {
+/* --- Logo Styling --- */
+.main-logo {
   width: 100%;
   max-width: 250px;
   height: auto;
@@ -108,15 +63,15 @@ body {
   border-radius: 8px;
 }
 
-/* --- Button Styling --- */
+/* --- CTA Button --- */
 .cta-button {
   display: inline-block;
   background-color: #e50914;
   color: #fff;
-  padding: 12px 24px;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 4px;
+  padding: 12px 24px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -148,7 +103,13 @@ body {
   color: #e50914;
 }
 
-/* --- Side-by-Side VHS Detail Layout --- */
+/* --- VHS Detail Page Layout --- */
+.title-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 .vhs-detail-layout {
   display: flex;
   gap: 2rem;
