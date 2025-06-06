@@ -69,36 +69,19 @@ body {
   display: none;
 }
 
-/* --- Main Container --- */
+/* --- Containers --- */
 .home-container {
   padding: 40px 20px;
-  max-width: 500px;
-  margin: 0 auto;
-  text-align: center;
 }
 
 .title-page-container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
-/* --- Title and Subtitle Styling --- */
-.main-title {
-  font-size: 1.4rem;
-  font-weight: bolder;
-  margin: 1rem 0;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  color: #ccc;
-}
-
-/* --- Logo & VHS Images --- */
-.main-logo,
-.title-page-image {
+/* --- Logo --- */
+.main-logo {
   width: 100%;
   max-width: 250px;
   height: auto;
@@ -108,95 +91,90 @@ body {
   border-radius: 8px;
 }
 
-/* --- Button Styling --- */
+/* --- Title --- */
+.main-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Subtitle --- */
+.subtitle {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* --- CTA Button --- */
 .cta-button {
   display: inline-block;
   background-color: #e50914;
   color: #fff;
-  padding: 12px 24px;
+  padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 4px;
   text-decoration: none;
   transition: background 0.3s ease;
+  margin-top: 20px;
 }
 
 .cta-button:hover {
   background-color: #b00610;
 }
 
-/* --- VHS Titles List Page --- */
-.titles-list {
-  list-style: none;
-  padding: 0;
-  margin: 2rem 0;
-}
-
-.titles-list li {
-  margin: 1rem 0;
-}
-
-.titles-list a {
-  color: white;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.titles-list a:hover {
-  color: #e50914;
-}
-
-/* --- Side-by-Side VHS Detail Layout --- */
+/* --- VHS Detail Layout --- */
 .vhs-detail-layout {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  margin-bottom: 2rem;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .vhs-image img {
-  width: 200px;
+  width: 180px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 .vhs-info {
   flex: 1;
   text-align: left;
+  font-size: 0.95rem;
   color: #ccc;
-  font-size: 1rem;
   line-height: 1.6;
-  padding-top: 10px;
+  max-width: 300px;
 }
 
-/* --- Price Table Section --- */
+/* --- Price Table --- */
 .price-heading {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .price-table {
-  margin: 0 auto 2rem;
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
   border-collapse: collapse;
-  color: #fff;
+  font-size: 0.95rem;
 }
 
-.price-table th,
-.price-table td {
-  border: 1px solid #666;
-  padding: 10px;
+.price-table th, .price-table td {
+  border: 1px solid #444;
+  padding: 8px;
   text-align: center;
 }
 
 .price-table th {
   background-color: #111;
   color: #ff4444;
+  font-weight: bold;
 }
 
 .price-table tr:nth-child(even) {
