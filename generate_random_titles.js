@@ -3,7 +3,7 @@ const path = require("path");
 const https = require("https");
 
 const TMDB_API_KEY = "af1cc8eba723466ddbf55ab404c953e0";
-const MOVIE_COUNT = 6;
+const MOVIE_COUNT = 25;
 const TITLES_DIR = path.join(__dirname, "titles");
 const QUARANTINE_DIR = path.join(__dirname, "titles_quarantine");
 const INDEX_HTML = path.join(TITLES_DIR, "index.html");
