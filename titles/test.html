@@ -1,99 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Test VHS Page - Retrograde DB</title>
-  <link rel="stylesheet" href="../styles/style.css" />
-  <style>
-    .price-section {
-      margin: 2rem auto;
-      max-width: 600px;
-    }
+.price-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
 
-    .price-heading {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
+.price-card {
+  background-color: #111;
+  color: #fff;
+  padding: 10px 0;
+  border-radius: 8px;
+  width: 30%; /* NEW: tighter boxes for 3 across */
+  min-width: 90px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
 
-    .price-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-    }
+.grade {
+  font-weight: bold;
+  color: #ff4444;
+  font-size: 1rem;
+}
 
-    .price-card {
-      flex: 1 1 calc(33.3% - 12px);
-      background-color: #111;
-      padding: 12px;
-      border-radius: 8px;
-      text-align: center;
-      color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      min-width: 90px;
-    }
-
-    .price-card .grade {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #ff4444;
-    }
-
-    .price-card .value {
-      font-size: 1rem;
-      margin-top: 4px;
-      color: #ccc;
-    }
-
-    @media (max-width: 500px) {
-      .price-card {
-        flex: 1 1 30%;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="menu-icon">☰</div>
-    <div class="site-title">RETROGRADE DATA BASE</div>
-    <div class="search-icon">🔍</div>
-  </header>
-
-  <nav id="dropdownMenu" class="dropdown-menu hidden">
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html">Browse VHS Titles</a></li>
-      <li><a href="../genres.html">Genres</a></li>
-      <li><a href="../pricing.html">Pricing Info</a></li>
-      <li><a href="../submit.html">Submit a Tape</a></li>
-      <li><a href="../contact.html">Contact</a></li>
-    </ul>
-  </nav>
-
-  <main class="home-container">
-    <img src="../assets/vhs_placeholder_red_database.png" alt="Test VHS" class="main-logo" />
-    <h1 class="main-title">Test Title (1995)</h1>
-    <p class="subtitle">Rating: 7.8</p>
-
-    <section class="price-section">
-      <h2 class="price-heading">Current Market Prices</h2>
-      <div class="price-grid">
-        <div class="price-card"><div class="grade">Raw</div><div class="value">$18</div></div>
-        <div class="price-card"><div class="grade">7.0</div><div class="value">$29</div></div>
-        <div class="price-card"><div class="grade">8.0</div><div class="value">$47</div></div>
-        <div class="price-card"><div class="grade">9.0</div><div class="value">$65</div></div>
-        <div class="price-card"><div class="grade">9.5</div><div class="value">$89</div></div>
-        <div class="price-card"><div class="grade">10.0</div><div class="value">$110</div></div>
-      </div>
-    </section>
-
-    <p class="subtitle">This is a sample VHS entry with mock pricing data for layout testing.</p>
-    <a href="index.html" class="cta-button">← Back to Titles</a>
-  </main>
-
-  <script src="../scripts/menu.js"></script>
-</body>
-</html>
+.value {
+  font-size: 0.9rem;
+  margin-top: 6px;
+  color: #ccc;
+}
