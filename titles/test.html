@@ -7,22 +7,53 @@
   <link rel="stylesheet" href="../styles/style.css" />
 
   <style>
-    .price-heading {
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem;
-      color: #ff4444;
-      font-weight: bold;
+    .home-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    .price-grid-wrapper {
-      background-color: #111;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 2rem auto;
-      max-width: 640px;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); /* 🔴 Red glow */
-      /* To try a white glow instead, swap line above with:
-         box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); */
+    .main-logo {
+      width: 50%;
+      max-width: 150px;
+      height: auto;
+      display: block;
+      margin: 0 0 20px auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+    }
+
+    .main-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 1rem 0 0.3rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+
+    .price-heading {
+      font-size: 1.4rem;
+      margin: 1.5rem 0 1rem;
+      color: #ff4444;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .price-grid-container {
+      background-color: #000;
+      border-radius: 16px;
+      padding: 20px 10px;
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+      margin-bottom: 2rem;
     }
 
     .price-grid {
@@ -30,6 +61,8 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .price-card {
@@ -37,24 +70,43 @@
       color: #fff;
       padding: 10px 0;
       border-radius: 8px;
-      width: 30%;
-      min-width: 90px;
+      width: 28%;
+      min-width: 85px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      text-align: center;
     }
 
     .grade {
       font-weight: bold;
       color: #ff4444;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .value {
-      font-size: 0.9rem;
-      margin-top: 6px;
+      font-size: 0.8rem;
+      margin-top: 4px;
       color: #ccc;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #e50914;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      padding: 12px 24px;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #b00610;
     }
   </style>
 </head>
+
 <body>
   <header class="site-header">
     <div class="menu-icon">☰</div>
@@ -75,11 +127,13 @@
 
   <main class="home-container">
     <img src="../assets/vhs_placeholder_red_database.png" alt="Test Title" class="main-logo" />
+
     <h1 class="main-title">Test Title (1995)</h1>
     <p class="subtitle">Rating: 7.8</p>
-    
+
     <h2 class="price-heading">Current Market Prices</h2>
-    <div class="price-grid-wrapper">
+
+    <div class="price-grid-container">
       <div class="price-grid">
         <div class="price-card">
           <div class="grade">Raw</div>
