@@ -3,46 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Test Title - Retrograde DB</title>
+  <title>Test VHS Layout</title>
   <link rel="stylesheet" href="../styles/style.css" />
-
   <style>
-    .price-heading {
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem;
-      color: #ff4444;
-      font-weight: bold;
-    }
-
-    .price-grid {
+    .price-section {
+      background-color: #111;
+      padding: 1rem;
+      margin: 1.5rem auto;
+      border-radius: 10px;
+      max-width: 500px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      justify-content: space-between;
     }
 
-    .price-card {
-      background-color: #111;
+    .price-box {
+      flex: 0 0 32%;
+      background-color: #222;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      padding: 10px 5px;
+      text-align: center;
       color: #fff;
-      padding: 10px 0;
-      border-radius: 8px;
-      width: 30%;
-      min-width: 90px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      font-size: 0.85rem;
+      line-height: 1.3;
     }
 
-    .grade {
+    .price-label {
       font-weight: bold;
       color: #ff4444;
-      font-size: 1rem;
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.75rem;
     }
 
-    .value {
+    .price-value {
       font-size: 0.9rem;
-      margin-top: 6px;
-      color: #ccc;
     }
   </style>
 </head>
@@ -53,54 +49,39 @@
     <div class="search-icon">🔍</div>
   </header>
 
-  <nav id="dropdownMenu" class="dropdown-menu hidden">
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html">Browse VHS Titles</a></li>
-      <li><a href="../genres.html">Genres</a></li>
-      <li><a href="../pricing.html">Pricing Info</a></li>
-      <li><a href="../submit.html">Submit a Tape</a></li>
-      <li><a href="../contact.html">Contact</a></li>
-    </ul>
-  </nav>
-
   <main class="home-container">
     <img src="../assets/vhs_placeholder_red_database.png" alt="Test Title" class="main-logo" />
-    <h1 class="main-title">Test Title (1995)</h1>
-    <p class="subtitle">Rating: 7.8</p>
-    
-    <h2 class="price-heading">Current Market Prices</h2>
-    <div class="price-grid">
-      <div class="price-card">
-        <div class="grade">Raw</div>
-        <div class="value">$18</div>
+    <h1 class="main-title">Test Title: The Tape</h1>
+    <p class="subtitle">1989 • Rating: 6.8</p>
+
+    <div class="price-section">
+      <div class="price-box">
+        <span class="price-label">Raw</span>
+        <span class="price-value">$23</span>
       </div>
-      <div class="price-card">
-        <div class="grade">7.0</div>
-        <div class="value">$29</div>
+      <div class="price-box">
+        <span class="price-label">Graded 7.0</span>
+        <span class="price-value">$54</span>
       </div>
-      <div class="price-card">
-        <div class="grade">8.0</div>
-        <div class="value">$47</div>
+      <div class="price-box">
+        <span class="price-label">Graded 8.0</span>
+        <span class="price-value">$76</span>
       </div>
-      <div class="price-card">
-        <div class="grade">9.0</div>
-        <div class="value">$65</div>
+      <div class="price-box">
+        <span class="price-label">Graded 9.0</span>
+        <span class="price-value">$103</span>
       </div>
-      <div class="price-card">
-        <div class="grade">9.5</div>
-        <div class="value">$89</div>
+      <div class="price-box">
+        <span class="price-label">Graded 9.5</span>
+        <span class="price-value">$121</span>
       </div>
-      <div class="price-card">
-        <div class="grade">10.0</div>
-        <div class="value">$110</div>
+      <div class="price-box">
+        <span class="price-label">Graded 10.0</span>
+        <span class="price-value">$155</span>
       </div>
     </div>
 
-    <p class="subtitle">This is a sample VHS entry with mock pricing data for layout testing.</p>
     <a href="index.html" class="cta-button">← Back to Titles</a>
   </main>
-
-  <script src="../scripts/menu.js"></script>
 </body>
 </html>
