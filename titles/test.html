@@ -37,11 +37,14 @@
       color: #ccc;
     }
 
+    .back-button-wrapper {
+      text-align: right;
+      margin: -1rem 0 1rem;
+    }
+
     .inline-btn {
       font-size: 0.9rem;
       padding: 6px 12px;
-      float: right;
-      margin-bottom: 10px;
     }
 
     .price-heading {
@@ -110,12 +113,13 @@
   </nav>
 
   <main class="home-container">
+    <div class="back-button-wrapper">
+      <a href="index.html" class="cta-button inline-btn">← Back to Titles</a>
+    </div>
+
     <div class="vhs-header">
       <img src="../assets/vhs_placeholder_red_database.png" alt="Test Title" class="main-logo" />
       <div class="vhs-text">
-        <div style="text-align: right;">
-          <a href="index.html" class="cta-button inline-btn">← Back to Titles</a>
-        </div>
         <h1>Test Title (1995)</h1>
         <p>Rating: 7.8</p>
       </div>
