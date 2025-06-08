@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Steel Reckoning - Retrograde DB</title>
+  <title>Test Title - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
     .price-heading {
@@ -12,6 +12,7 @@
       font-weight: bold;
       transition: color 0.3s;
     }
+
     .price-grid-wrapper {
       background-color: #111;
       border-radius: 16px;
@@ -21,12 +22,14 @@
       margin: 1rem auto 2rem;
       transition: box-shadow 0.3s;
     }
+
     .price-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
     }
+
     .price-card {
       background-color: #111;
       color: #fff;
@@ -36,15 +39,18 @@
       min-width: 90px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
+
     .grade {
       font-weight: bold;
       font-size: 1rem;
     }
+
     .value {
       font-size: 0.9rem;
       margin-top: 6px;
       color: #ccc;
     }
+
     .info-section {
       display: flex;
       align-items: center;
@@ -54,23 +60,28 @@
       max-width: 700px;
       margin-inline: auto;
     }
+
     .main-logo {
       width: 100px;
       height: auto;
     }
+
     .title-text {
       display: flex;
       flex-direction: column;
     }
+
     .main-title {
       font-size: 1.8rem;
       margin-bottom: 5px;
     }
+
     .subtitle {
       font-size: 1rem;
       color: #ccc;
       margin: 0;
     }
+
     .cta-button {
       display: inline-block;
       background-color: #ff4444;
@@ -81,11 +92,13 @@
       font-weight: bold;
       margin: 1rem auto;
       transition: background-color 0.3s;
-      text-shadow: 1px 1px 2px black;
+      text-shadow: 1px 1px 3px #000;
     }
+
     .cta-button:hover {
       background-color: #e12a2a;
     }
+
     .centered-button {
       text-align: center;
     }
@@ -115,11 +128,11 @@
     </div>
 
     <div class="info-section">
-      <img id="cover-image" src="../assets/Testing.png" alt="Steel Reckoning" class="main-logo" />
+      <img id="cover-image" src="../assets/ShadowCode.png" alt="The Shadow Code Poster" class="main-logo" />
       <div class="title-text">
-        <h1 class="main-title">Steel Reckoning</h1>
+        <h1 class="main-title">The Shadow Code</h1>
         <p class="subtitle">Rating: 7.8</p>
-        <p class="subtitle">Genre: Sci-Fi</p>
+        <p class="subtitle">Genre: Thriller</p>
       </div>
     </div>
 
@@ -158,28 +171,6 @@
       return [h * 360, s * 100, l * 100];
     }
 
-    function hslToRgb(h, s, l) {
-      h /= 360; s /= 100; l /= 100;
-      let r, g, b;
-      if (s === 0) { r = g = b = l; }
-      else {
-        const hue2rgb = (p, q, t) => {
-          if (t < 0) t += 1;
-          if (t > 1) t -= 1;
-          if (t < 1 / 6) return p + (q - p) * 6 * t;
-          if (t < 1 / 2) return q;
-          if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-          return p;
-        };
-        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        const p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1 / 3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1 / 3);
-      }
-      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-    }
-
     const img = document.getElementById('cover-image');
     const button = document.getElementById('back-button');
     const heading = document.getElementById('price-heading');
@@ -193,48 +184,49 @@
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
 
-      const imageData = ctx.getImageData(
-        canvas.width * 0.3,
-        canvas.height * 0.3,
-        canvas.width * 0.4,
-        canvas.height * 0.4
-      ).data;
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-      const hueBuckets = Array(360).fill(0);
-      const pixelData = [];
+      let centerTotal = 0, rSum = 0, gSum = 0, bSum = 0, sTotal = 0;
+      let maxSaturation = 0, vibrantPixel = { r: 0, g: 0, b: 0 };
+      
+      for (let i = 0; i < data.length; i += 4 * 8) {
+        const red = data[i];
+        const green = data[i + 1];
+        const blue = data[i + 2];
+        const [h, s, l] = rgbToHsl(red, green, blue);
 
-      for (let i = 0; i < imageData.length; i += 4 * 5) {
-        const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2];
-        const [h, s, l] = rgbToHsl(r, g, b);
-        if (s > 50 && l > 20 && l < 80) {
-          const hue = Math.floor(h) % 360;
-          hueBuckets[hue]++;
-          pixelData.push({ r, g, b, h });
+        const x = (i / 4) % canvas.width;
+        const y = Math.floor(i / 4 / canvas.width);
+
+        // Track most vibrant pixel
+        if (s > maxSaturation && l > 20 && l < 85) {
+          maxSaturation = s;
+          vibrantPixel = { r: red, g: green, b: blue };
+        }
+
+        // Center zone check
+        if (
+          x > canvas.width * 0.3 && x < canvas.width * 0.7 &&
+          y > canvas.height * 0.3 && y < canvas.height * 0.7
+        ) {
+          rSum += red;
+          gSum += green;
+          bSum += blue;
+          sTotal += s;
+          centerTotal++;
         }
       }
 
-      const dominantHue = hueBuckets.indexOf(Math.max(...hueBuckets));
+      // Compute average center color and sat
+      const rAvg = rSum / centerTotal;
+      const gAvg = gSum / centerTotal;
+      const bAvg = bSum / centerTotal;
+      const sAvg = sTotal / centerTotal;
 
-      const selectedPixels = pixelData.filter(p =>
-        Math.abs(p.h - dominantHue) <= 5 || Math.abs(p.h - dominantHue) >= 355
-      );
+      let final = (sAvg < 25) ? vibrantPixel : { r: rAvg, g: gAvg, b: bAvg };
+      const finalColor = `rgb(${Math.round(final.r)}, ${Math.round(final.g)}, ${Math.round(final.b)})`;
 
-      let r = 180, g = 30, b = 120; // fallback
-      if (selectedPixels.length > 0) {
-        const avg = (key) =>
-          Math.round(selectedPixels.reduce((sum, p) => sum + p[key], 0) / selectedPixels.length);
-        r = avg('r');
-        g = avg('g');
-        b = avg('b');
-
-        let [h, s, l] = rgbToHsl(r, g, b);
-        s = Math.min(100, s + 20);
-        l = Math.min(90, l + 10);
-        [r, g, b] = hslToRgb(h, s, l);
-      }
-
-      const finalColor = `rgb(${r}, ${g}, ${b})`;
-      wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${final.r}, ${final.g}, ${final.b}, 0.5)`;
       button.style.backgroundColor = finalColor;
       heading.style.color = finalColor;
     };
