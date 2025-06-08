@@ -208,20 +208,26 @@
 
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-      let maxSat = 0;
-      let bestPixel = { r: 180, g: 30, b: 30 }; // fallback
-      for (let i = 0; i < data.length; i += 4 * 2) {
+      let bestScore = 0;
+      let bestPixel = { r: 180, g: 30, b: 30 }; // fallback red
+
+      for (let i = 0; i < data.length; i += 4 * 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
         const [h, s, l] = rgbToHsl(r, g, b);
-        if (s > maxSat && l > 10 && l < 90) {
-          maxSat = s;
+        if (l < 10 || l > 95 || s < 30) continue; // ignore white/black/gray
+
+        const score = s * (1 - Math.abs(l - 50) / 50); // prefer colorful mid-light pixels
+        if (score > bestScore) {
+          bestScore = score;
           bestPixel = { r, g, b };
         }
       }
 
       let [h, s, l] = rgbToHsl(bestPixel.r, bestPixel.g, bestPixel.b);
-      l = Math.min(90, l + 10); // boost brightness
+      s = Math.min(100, s + 20); // boost saturation
+      if (l < 30) l = 35;        // brighten dark shades
       const [r2, g2, b2] = hslToRgb(h, s, l);
+
       const finalColor = `rgb(${r2}, ${g2}, ${b2})`;
 
       wrapper.style.boxShadow = `0 0 25px rgba(${r2}, ${g2}, ${b2}, 0.5)`;
