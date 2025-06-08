@@ -113,7 +113,7 @@
   <nav id="dropdownMenu" class="dropdown-menu hidden">
     <ul>
       <li><a href="../index.html">Home</a></li>
-      <li><a href="/titles/index.html">Browse VHS Titles</a></li> <!-- ✅ Fixed -->
+      <li><a href="/titles/index.html">Browse VHS Titles</a></li>
       <li><a href="../genres.html">Genres</a></li>
       <li><a href="../pricing.html">Pricing Info</a></li>
       <li><a href="../submit.html">Submit a Tape</a></li>
@@ -153,20 +153,40 @@
 
   <script src="../scripts/menu.js"></script>
   <script>
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+          case g: h = ((b - r) / d + 2); break;
+          case b: h = ((r - g) / d + 4); break;
+        }
+        h /= 6;
+      }
+      return [h * 360, s * 100, l * 100];
+    }
+
     const img = document.getElementById('cover-image');
     const button = document.getElementById('back-button');
     const heading = document.getElementById('price-heading');
     const wrapper = document.getElementById('price-grid-wrapper');
 
     img.crossOrigin = 'anonymous';
-    img.onload = function() {
+    img.onload = function () {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
 
-      const region = ctx.getImageData(
+      const data = ctx.getImageData(
         canvas.width * 0.25,
         canvas.height * 0.25,
         canvas.width * 0.5,
@@ -175,13 +195,13 @@
 
       let r = 0, g = 0, b = 0, count = 0;
 
-      for (let i = 0; i < region.length; i += 4 * 10) {
-        const red = region[i];
-        const green = region[i + 1];
-        const blue = region[i + 2];
-        const brightness = red + green + blue;
+      for (let i = 0; i < data.length; i += 4 * 10) {
+        const red = data[i];
+        const green = data[i + 1];
+        const blue = data[i + 2];
 
-        if (brightness > 60) { // ignore near-black pixels
+        const [hue, sat, light] = rgbToHsl(red, green, blue);
+        if (sat > 30 && light > 20 && light < 70) {
           r += red;
           g += green;
           b += blue;
@@ -189,17 +209,17 @@
         }
       }
 
-      if (count === 0) return;
-
-      r = Math.round(r / count);
-      g = Math.round(g / count);
-      b = Math.round(b / count);
-
-      const dominantColor = `rgb(${r}, ${g}, ${b})`;
+      let finalColor = 'rgb(180, 30, 30)'; // Fallback Retrograde red
+      if (count > 0) {
+        r = Math.round(r / count);
+        g = Math.round(g / count);
+        b = Math.round(b / count);
+        finalColor = `rgb(${r}, ${g}, ${b})`;
+      }
 
       wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
-      button.style.backgroundColor = dominantColor;
-      heading.style.color = dominantColor;
+      button.style.backgroundColor = finalColor;
+      heading.style.color = finalColor;
     };
   </script>
 </body>
