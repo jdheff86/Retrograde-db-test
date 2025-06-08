@@ -3,143 +3,245 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Testing Title (1997)</title>
+  <title>Test Title - Retrograde DB</title>
+  <link rel="stylesheet" href="../styles/style.css" />
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-    }
-
-    .back-button {
-      margin: 20px auto;
-      padding: 10px 20px;
-      background-color: var(--theme-color);
-      color: #fff;
+    .price-heading {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
       font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      cursor: pointer;
+      transition: color 0.3s;
     }
 
-    .poster {
-      width: 220px;
-      height: auto;
-      margin-top: 10px;
-      border-radius: 6px;
-    }
-
-    .title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .info {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .prices-heading {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: var(--theme-color);
-      text-shadow: 0 0 10px var(--theme-color);
+    .price-grid-wrapper {
+      background-color: #111;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+      max-width: 640px;
+      margin: 1rem auto 2rem;
+      transition: box-shadow 0.3s;
     }
 
     .price-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 12px;
     }
 
-    .price-box {
+    .price-card {
       background-color: #111;
-      border: 1px solid var(--theme-color);
+      color: #fff;
+      padding: 10px 0;
       border-radius: 8px;
-      padding: 10px 15px;
+      width: 30%;
       min-width: 90px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
 
-    .description {
-      font-size: 14px;
-      padding: 0 20px;
-      max-width: 500px;
-      margin: 0 auto 30px;
+    .grade {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .value {
+      font-size: 0.9rem;
+      margin-top: 6px;
       color: #ccc;
+    }
+
+    .info-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+      max-width: 700px;
+      margin-inline: auto;
+    }
+
+    .main-logo {
+      width: 100px;
+      height: auto;
+    }
+
+    .title-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-title {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #ff4444;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 1rem auto;
+      transition: background-color 0.3s;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .cta-button:hover {
+      background-color: #e12a2a;
+    }
+
+    .centered-button {
+      text-align: center;
     }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="menu-icon">☰</div>
+    <div class="site-title">RETROGRADE DATA BASE</div>
+    <div class="search-icon">🔍</div>
+  </header>
+
+  <nav id="dropdownMenu" class="dropdown-menu hidden">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="/titles/index.html">Browse VHS Titles</a></li>
+      <li><a href="../genres.html">Genres</a></li>
+      <li><a href="../pricing.html">Pricing Info</a></li>
+      <li><a href="../submit.html">Submit a Tape</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="home-container">
+    <div class="centered-button">
+      <a href="/titles/index.html" class="cta-button" id="back-button">← Back to Titles</a>
+    </div>
+
+    <div class="info-section">
+      <img id="cover-image" src="../assets/Testing.png" alt="Testing" class="main-logo" />
+      <div class="title-text">
+        <h1 class="main-title">Test Title (1995)</h1>
+        <p class="subtitle">Rating: 7.8</p>
+        <p class="subtitle">Genre: Adventure</p>
+      </div>
+    </div>
+
+    <h2 class="price-heading" id="price-heading">Current Market Prices</h2>
+
+    <div class="price-grid-wrapper" id="price-grid-wrapper">
+      <div class="price-grid">
+        <div class="price-card"><div class="grade">Raw</div><div class="value">$20</div></div>
+        <div class="price-card"><div class="grade">7.0</div><div class="value">$35</div></div>
+        <div class="price-card"><div class="grade">8.0</div><div class="value">$48</div></div>
+        <div class="price-card"><div class="grade">9.0</div><div class="value">$75</div></div>
+        <div class="price-card"><div class="grade">9.5</div><div class="value">$90</div></div>
+        <div class="price-card"><div class="grade">10.0</div><div class="value">$130</div></div>
+      </div>
+    </div>
+
+    <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
+  </main>
+
   <script>
-    window.onload = () => {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.src = "Testing.png";
-      img.onload = function () {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        const colorMap = new Map();
-        let r, g, b;
-        let count = 0;
-
-        for (let i = 0; i < imageData.length; i += 4) {
-          r = imageData[i];
-          g = imageData[i + 1];
-          b = imageData[i + 2];
-
-          const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
-          const key = `${Math.round(r / 8)},${Math.round(g / 8)},${Math.round(b / 8)}`;
-
-          // Filter out nearly-black/white pixels
-          if (brightness > 30 && brightness < 230) {
-            const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-            if (saturation > 20) {
-              count++;
-              colorMap.set(key, (colorMap.get(key) || 0) + 1);
-            }
-          }
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) { h = s = 0; }
+      else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
         }
+        h /= 6;
+      }
+      return [h * 360, s * 100, l * 100];
+    }
 
-        const topColor = [...colorMap.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
-        if (topColor) {
-          const [rBin, gBin, bBin] = topColor.split(",").map(n => parseInt(n) * 8);
-          const hex = `#${[rBin, gBin, bBin].map(x => x.toString(16).padStart(2, "0")).join("")}`;
-          document.documentElement.style.setProperty("--theme-color", hex);
-        }
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
       };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      const r = hue2rgb(p, q, h + 1/3);
+      const g = hue2rgb(p, q, h);
+      const b = hue2rgb(p, q, h - 1/3);
+      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
+
+    const img = document.getElementById('cover-image');
+    const button = document.getElementById('back-button');
+    const heading = document.getElementById('price-heading');
+    const wrapper = document.getElementById('price-grid-wrapper');
+
+    img.crossOrigin = 'anonymous';
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const data = ctx.getImageData(
+        canvas.width * 0.25,
+        canvas.height * 0.25,
+        canvas.width * 0.5,
+        canvas.height * 0.5
+      ).data;
+
+      let r = 0, g = 0, b = 0, count = 0;
+      let fogScore = 0;
+
+      for (let i = 0; i < data.length; i += 4 * 8) {
+        const red = data[i], green = data[i + 1], blue = data[i + 2];
+        const [h, s, l] = rgbToHsl(red, green, blue);
+
+        // Score foggy cyan
+        if (h > 170 && h < 200 && s < 30 && l > 60) fogScore++;
+        // Ignore near-black/gray areas
+        if (l > 20 && s > 25) {
+          r += red; g += green; b += blue;
+          count++;
+        }
+      }
+
+      if (fogScore > 50) {
+        r = 180; g = 220; b = 230; // Foggy cyan
+      } else if (count > 0) {
+        r = Math.round(r / count);
+        g = Math.round(g / count);
+        b = Math.round(b / count);
+        let [h, s, l] = rgbToHsl(r, g, b);
+        s = Math.min(100, s + 30);
+        l = Math.min(85, l + 10);
+        [r, g, b] = hslToRgb(h, s, l);
+      }
+
+      const finalColor = `rgb(${r}, ${g}, ${b})`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
+      button.style.backgroundColor = finalColor;
+      heading.style.color = finalColor;
     };
   </script>
-
-  <button class="back-button">← Back to Titles</button>
-  <img src="Testing.png" alt="Movie Poster" class="poster" />
-  <div class="title">Testing Title (1997)</div>
-  <div class="info">Rating: PG • 1997<br>Genre: Horror</div>
-
-  <div class="prices-heading">Current Market Prices</div>
-  <div class="price-grid">
-    <div class="price-box">Raw: $22</div>
-    <div class="price-box">Grade 7.0: $34</div>
-    <div class="price-box">Grade 8.0: $48</div>
-    <div class="price-box">Grade 9.0: $75</div>
-    <div class="price-box">Grade 9.5: $90</div>
-    <div class="price-box">Grade 10: $150</div>
-  </div>
-
-  <div class="description">
-    A chilling tale of a haunted VHS tape that traps its viewers in a looping nightmare.
-  </div>
 </body>
 </html>
