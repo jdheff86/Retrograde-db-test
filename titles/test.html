@@ -128,11 +128,11 @@
     </div>
 
     <div class="info-section">
-      <img id="cover-image" src="../assets/Testing.png" alt="The Shadow Code Poster" class="main-logo" />
+      <img id="cover-image" src="../assets/Testing.png" alt="Steel Reckoning Poster" class="main-logo" />
       <div class="title-text">
-        <h1 class="main-title">The Shadow Code</h1>
+        <h1 class="main-title">Steel Reckoning</h1>
         <p class="subtitle">Rating: 7.8</p>
-        <p class="subtitle">Genre: Thriller</p>
+        <p class="subtitle">Genre: Action</p>
       </div>
     </div>
 
@@ -186,49 +186,24 @@
 
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-      let centerTotal = 0, rSum = 0, gSum = 0, bSum = 0, sTotal = 0;
-      let maxSaturation = 0, vibrantPixel = { r: 0, g: 0, b: 0 };
-      
-      for (let i = 0; i < data.length; i += 4 * 8) {
-        const red = data[i];
-        const green = data[i + 1];
-        const blue = data[i + 2];
-        const [h, s, l] = rgbToHsl(red, green, blue);
+      let maxSat = 0;
+      let bestPixel = { r: 180, g: 30, b: 30 }; // fallback color
+      for (let i = 0; i < data.length; i += 4 * 2) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const [h, s, l] = rgbToHsl(r, g, b);
 
-        const x = (i / 4) % canvas.width;
-        const y = Math.floor(i / 4 / canvas.width);
-
-        // Track most vibrant pixel
-        if (s > maxSaturation && l > 20 && l < 85) {
-          maxSaturation = s;
-          vibrantPixel = { r: red, g: green, b: blue };
-        }
-
-        // Center zone check
-        if (
-          x > canvas.width * 0.3 && x < canvas.width * 0.7 &&
-          y > canvas.height * 0.3 && y < canvas.height * 0.7
-        ) {
-          rSum += red;
-          gSum += green;
-          bSum += blue;
-          sTotal += s;
-          centerTotal++;
+        if (s > maxSat && l > 10 && l < 90) {
+          maxSat = s;
+          bestPixel = { r, g, b };
         }
       }
 
-      // Compute average center color and sat
-      const rAvg = rSum / centerTotal;
-      const gAvg = gSum / centerTotal;
-      const bAvg = bSum / centerTotal;
-      const sAvg = sTotal / centerTotal;
-
-      let final = (sAvg < 25) ? vibrantPixel : { r: rAvg, g: gAvg, b: bAvg };
-      const finalColor = `rgb(${Math.round(final.r)}, ${Math.round(final.g)}, ${Math.round(final.b)})`;
+      const final = bestPixel;
+      const color = `rgb(${Math.round(final.r)}, ${Math.round(final.g)}, ${Math.round(final.b)})`;
 
       wrapper.style.boxShadow = `0 0 25px rgba(${final.r}, ${final.g}, ${final.b}, 0.5)`;
-      button.style.backgroundColor = finalColor;
-      heading.style.color = finalColor;
+      button.style.backgroundColor = color;
+      heading.style.color = color;
     };
   </script>
 </body>
