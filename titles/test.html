@@ -3,153 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Testing</title>
+  <title>Testing Title</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #000;
       color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
     }
 
     .main-logo {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
+      max-width: 280px;
+      margin-top: 30px;
       box-shadow: 0 0 40px var(--dynamic-color);
     }
 
-    .container {
-      text-align: center;
-      padding: 20px;
-    }
-
-    h1 {
+    .title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-top: 20px;
+      text-shadow: 2px 2px 5px black;
       color: var(--dynamic-color);
-      text-shadow: 2px 2px 0 #000;
     }
 
-    .info {
-      margin-top: 10px;
-      font-size: 1.2em;
+    .rating, .genre {
+      font-size: 1em;
+      margin-top: 5px;
+      color: var(--dynamic-color);
+      text-shadow: 1px 1px 3px black;
     }
 
-    .price-box {
+    .price-table {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .price-row {
+      display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-top: 25px;
+      margin: 5px 0;
     }
 
     .price-card {
-      border: 1px solid #333;
-      padding: 10px 15px;
-      background-color: #111;
+      background-color: rgba(255,255,255,0.05);
+      border: 1px solid var(--dynamic-color);
       border-radius: 5px;
+      padding: 10px 15px;
+      margin: 0 5px;
       color: var(--dynamic-color);
-      font-weight: bold;
-      text-shadow: 1px 1px 0 #000;
+      text-shadow: 1px 1px 2px black;
     }
 
-    .back-btn {
-      margin-top: 30px;
-      display: inline-block;
+    .description {
+      max-width: 600px;
+      text-align: center;
+      margin: 20px;
+      line-height: 1.4;
+      color: #ccc;
+    }
+
+    .back-button {
+      margin-top: auto;
+      margin-bottom: 30px;
       padding: 10px 20px;
+      font-size: 1em;
+      background-color: transparent;
+      border: 2px solid var(--dynamic-color);
+      color: var(--dynamic-color);
+      border-radius: 5px;
+      cursor: pointer;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .back-button:hover {
       background-color: var(--dynamic-color);
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-      box-shadow: 2px 2px 0 #000;
-    }
-
-    .back-btn:hover {
-      opacity: 0.9;
-    }
-
-    :root {
-      --dynamic-color: #d86a2c; /* Fallback value */
+      color: black;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img id="cover-image" src="../assets/Testing.png" alt="Testing Poster" class="main-logo"/>
-    <h1>Testing Title</h1>
-    <div class="info">
-      <div>Year • Rating: 1994 • PG</div>
-      <div>Genre: Action/Adventure</div>
-    </div>
+  <img id="cover-image" src="../assets/Testing.png" alt="Testing Title" class="main-logo" />
+  <div class="title">Testing Title (1997)</div>
+  <div class="rating">Rating: PG • 1997</div>
+  <div class="genre">Genre: Horror</div>
 
-    <div class="price-box">
-      <div class="price-card">Raw: $14</div>
-      <div class="price-card">7.0: $25</div>
-      <div class="price-card">8.0: $35</div>
-      <div class="price-card">9.0: $50</div>
-      <div class="price-card">9.5: $70</div>
-      <div class="price-card">10: $100</div>
+  <div class="price-table">
+    <div class="price-row">
+      <div class="price-card">Raw: $22</div>
+      <div class="price-card">Grade 7.0: $34</div>
+      <div class="price-card">Grade 8.0: $48</div>
     </div>
-
-    <a href="../titles/index.html" class="back-btn">Back to Titles</a>
+    <div class="price-row">
+      <div class="price-card">Grade 9.0: $75</div>
+      <div class="price-card">Grade 9.5: $90</div>
+      <div class="price-card">Grade 10: $150</div>
+    </div>
   </div>
 
+  <div class="description">
+    A chilling tale of a haunted VHS tape that traps its viewers in a looping nightmare.
+  </div>
+
+  <button class="back-button" onclick="window.location.href='../titles/index.html'">Back to Titles</button>
+
   <script>
-    const img = document.getElementById("cover-image");
-    img.addEventListener("load", () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.drawImage(img, 0, 0);
+    function getDominantColor(imgElement, callback) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      imgElement.crossOrigin = "Anonymous";
+      imgElement.onload = () => {
+        canvas.width = imgElement.naturalWidth;
+        canvas.height = imgElement.naturalHeight;
+        ctx.drawImage(imgElement, 0, 0);
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        const colorCounts = {};
+        let maxCount = 0;
+        let dominantColor = { r: 0, g: 0, b: 0 };
 
-      const colorCounts = {};
-      const totalPixels = canvas.width * canvas.height;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
 
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i + 1], b = data[i + 2];
+          const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+          const saturation = Math.max(r, g, b) - Math.min(r, g, b);
 
-        const hsv = rgbToHsv(r, g, b);
-        const [h, s, v] = hsv;
+          if (brightness > 240 || brightness < 20) continue; // skip near black/white
+          if (saturation < 40) continue; // skip dull colors
 
-        if (v < 0.18 || v > 0.96 || s < 0.3) continue; // Skip near-black, near-white, or dull colors
+          const key = `${Math.round(r/8)*8},${Math.round(g/8)*8},${Math.round(b/8)*8}`;
+          colorCounts[key] = (colorCounts[key] || 0) + 1;
 
-        const key = `${Math.round(r / 10) * 10},${Math.round(g / 10) * 10},${Math.round(b / 10) * 10}`;
-        colorCounts[key] = (colorCounts[key] || 0) + 1;
-      }
-
-      const topColor = Object.entries(colorCounts).sort((a, b) => b[1] - a[1])[0];
-      if (topColor) {
-        const [r, g, b] = topColor[0].split(',').map(Number);
-        const finalColor = `rgb(${r}, ${g}, ${b})`;
-        document.documentElement.style.setProperty('--dynamic-color', finalColor);
-      }
-    });
-
-    function rgbToHsv(r, g, b) {
-      r /= 255; g /= 255; b /= 255;
-      const max = Math.max(r, g, b), min = Math.min(r, g, b);
-      let h, s, v = max;
-
-      const d = max - min;
-      s = max === 0 ? 0 : d / max;
-
-      if (max === min) {
-        h = 0;
-      } else {
-        switch (max) {
-          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-          case g: h = (b - r) / d + 2; break;
-          case b: h = (r - g) / d + 4; break;
+          if (colorCounts[key] > maxCount) {
+            maxCount = colorCounts[key];
+            dominantColor = {
+              r: Math.round(r / 8) * 8,
+              g: Math.round(g / 8) * 8,
+              b: Math.round(b / 8) * 8
+            };
+          }
         }
-        h /= 6;
-      }
-      return [h, s, v];
+
+        callback(`rgb(${dominantColor.r}, ${dominantColor.g}, ${dominantColor.b})`);
+      };
     }
+
+    const imgElement = document.getElementById('cover-image');
+    getDominantColor(imgElement, (color) => {
+      document.documentElement.style.setProperty('--dynamic-color', color);
+    });
   </script>
 </body>
 </html>
