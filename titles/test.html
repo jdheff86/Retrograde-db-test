@@ -176,6 +176,14 @@
       ];
     }
 
+    function rgbDistance(c1, c2) {
+      return Math.sqrt(
+        (c1[0] - c2[0]) ** 2 +
+        (c1[1] - c2[1]) ** 2 +
+        (c1[2] - c2[2]) ** 2
+      );
+    }
+
     const img = document.getElementById('cover-image');
     const button = document.getElementById('back-button');
     const heading = document.getElementById('price-heading');
@@ -198,6 +206,9 @@
       let bestColor = [255, 0, 0];
       let bestScore = 0;
 
+      let pastelClusters = {};
+      let totalValidPixels = 0;
+
       regions.forEach(([xRatio, yRatio]) => {
         const regionW = Math.floor(canvas.width * 0.33);
         const regionH = Math.floor(canvas.height * 0.33);
@@ -208,16 +219,45 @@
         for (let i = 0; i < data.length; i += 4 * 4) {
           const r = data[i], g = data[i + 1], b = data[i + 2];
           const [h, s, l] = rgbToHsl(r, g, b);
-          const score = s * (l / 100); // high saturation * lightness
 
-          if (s > 30 && l > 20 && l < 90 && score > bestScore) {
-            bestScore = score;
-            bestColor = [r, g, b];
+          if (s > 20 && l > 20 && l < 90) {
+            totalValidPixels++;
+
+            // Score for vibrancy
+            const score = s * (1 - Math.abs(l - 50) / 50);
+            if (score > bestScore) {
+              bestScore = score;
+              bestColor = [r, g, b];
+            }
+
+            // Cluster similar pastel colors (within 15 RGB distance)
+            const key = Object.keys(pastelClusters).find(k =>
+              rgbDistance([r, g, b], k.split(',').map(Number)) < 15
+            );
+            if (key) {
+              pastelClusters[key]++;
+            } else {
+              pastelClusters[`${r},${g},${b}`] = 1;
+            }
           }
         }
       });
 
-      let [h, s, l] = rgbToHsl(...bestColor);
+      // Find dominant pastel cluster
+      let dominantPastel = bestColor;
+      let maxClusterCount = 0;
+      for (const k in pastelClusters) {
+        if (pastelClusters[k] > maxClusterCount) {
+          maxClusterCount = pastelClusters[k];
+          dominantPastel = k.split(',').map(Number);
+        }
+      }
+
+      const pastelRatio = maxClusterCount / totalValidPixels;
+
+      // Use pastel if dominant, otherwise vibrant
+      let final = pastelRatio > 0.65 ? dominantPastel : bestColor;
+      let [h, s, l] = rgbToHsl(...final);
       s = Math.min(100, s + 20);
       l = Math.min(90, l + 5);
       const [rF, gF, bF] = hslToRgb(h, s, l);
