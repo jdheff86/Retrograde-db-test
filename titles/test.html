@@ -2,74 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test Title (1995) - Retrograde DB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Title - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
-    .info-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      margin-left: 1rem;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-      color: #ccc;
-      margin: 2px 0;
-    }
     .price-heading {
       font-size: 1.5rem;
       margin: 2rem 0 1rem;
-      color: #ff4444;
       font-weight: bold;
-      text-align: center;
+      transition: color 0.3s;
     }
-    .price-container {
+
+    .price-grid-wrapper {
       background-color: #111;
       border-radius: 16px;
-      padding: 20px;
-      margin: 0 auto 2rem;
-      max-width: 700px;
-      box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.4);
+      padding: 16px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5); /* fallback */
+      max-width: 640px;
+      margin: 1rem auto 2rem;
+      transition: box-shadow 0.3s;
     }
+
     .price-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
     }
+
     .price-card {
-      background-color: #1c1c1c;
+      background-color: #111;
       color: #fff;
       padding: 10px 0;
       border-radius: 8px;
       width: 30%;
       min-width: 90px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-      text-align: center;
     }
+
     .grade {
       font-weight: bold;
-      color: #ff4444;
       font-size: 1rem;
     }
+
     .value {
       font-size: 0.9rem;
       margin-top: 6px;
       color: #ccc;
     }
-    .details-row {
+
+    .info-section {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 1rem 0 0.5rem;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+      max-width: 700px;
+      margin-inline: auto;
     }
+
     .main-logo {
-      width: 120px;
+      width: 100px;
+      height: auto;
     }
+
+    .title-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-title {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 0;
+    }
+
     .cta-button {
-      margin-bottom: 2rem;
+      display: inline-block;
+      background-color: #ff4444;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 1rem auto;
+      transition: background-color 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #e12a2a;
+    }
+
+    .centered-button {
+      text-align: center;
     }
   </style>
 </head>
@@ -83,7 +113,7 @@
   <nav id="dropdownMenu" class="dropdown-menu hidden">
     <ul>
       <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html">Browse VHS Titles</a></li>
+      <li><a href="/titles/index.html">Browse VHS Titles</a></li> <!-- ✅ Fixed -->
       <li><a href="../genres.html">Genres</a></li>
       <li><a href="../pricing.html">Pricing Info</a></li>
       <li><a href="../submit.html">Submit a Tape</a></li>
@@ -92,18 +122,22 @@
   </nav>
 
   <main class="home-container">
-    <a href="index.html" class="cta-button">← Back to Titles</a>
-    <div class="details-row">
-      <img src="../assets/vhs_placeholder_red_database.png" alt="Test Title" class="main-logo" />
-      <div class="info-block">
+    <div class="centered-button">
+      <a href="/titles/index.html" class="cta-button" id="back-button">← Back to Titles</a>
+    </div>
+
+    <div class="info-section">
+      <img id="cover-image" src="../assets/vhs_placeholder_red_database.png" alt="Test Title" class="main-logo" />
+      <div class="title-text">
         <h1 class="main-title">Test Title (1995)</h1>
         <p class="subtitle">Rating: 7.8</p>
         <p class="subtitle">Genre: Comedy</p>
       </div>
     </div>
 
-    <h2 class="price-heading">Current Market Prices</h2>
-    <div class="price-container">
+    <h2 class="price-heading" id="price-heading">Current Market Prices</h2>
+
+    <div class="price-grid-wrapper" id="price-grid-wrapper">
       <div class="price-grid">
         <div class="price-card"><div class="grade">Raw</div><div class="value">$18</div></div>
         <div class="price-card"><div class="grade">7.0</div><div class="value">$29</div></div>
@@ -114,9 +148,59 @@
       </div>
     </div>
 
-    <p class="subtitle">This is a sample VHS entry with mock pricing data for layout testing.</p>
+    <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
   </main>
 
   <script src="../scripts/menu.js"></script>
+  <script>
+    const img = document.getElementById('cover-image');
+    const button = document.getElementById('back-button');
+    const heading = document.getElementById('price-heading');
+    const wrapper = document.getElementById('price-grid-wrapper');
+
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const region = ctx.getImageData(
+        canvas.width * 0.25,
+        canvas.height * 0.25,
+        canvas.width * 0.5,
+        canvas.height * 0.5
+      ).data;
+
+      let r = 0, g = 0, b = 0, count = 0;
+
+      for (let i = 0; i < region.length; i += 4 * 10) {
+        const red = region[i];
+        const green = region[i + 1];
+        const blue = region[i + 2];
+        const brightness = red + green + blue;
+
+        if (brightness > 60) { // ignore near-black pixels
+          r += red;
+          g += green;
+          b += blue;
+          count++;
+        }
+      }
+
+      if (count === 0) return;
+
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
+
+      const dominantColor = `rgb(${r}, ${g}, ${b})`;
+
+      wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
+      button.style.backgroundColor = dominantColor;
+      heading.style.color = dominantColor;
+    };
+  </script>
 </body>
 </html>
