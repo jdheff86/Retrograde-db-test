@@ -176,12 +176,58 @@
       ];
     }
 
-    function rgbDistance(c1, c2) {
-      return Math.sqrt(
-        (c1[0] - c2[0]) ** 2 +
-        (c1[1] - c2[1]) ** 2 +
-        (c1[2] - c2[2]) ** 2
-      );
+    function analyzeImage(img) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+      const regions = [
+        [0, 0], [0.5, 0], [1, 0],
+        [0, 0.5], [0.5, 0.5], [1, 0.5]
+      ];
+      let colorCounts = {}, pastelClusters = {};
+      let centerPixel = null, centerScore = 0;
+      const data = ctx.getImageData(canvas.width * 0.425, canvas.height * 0.425, canvas.width * 0.15, canvas.height * 0.15).data;
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const [h, s, l] = rgbToHsl(r, g, b);
+        const score = s * (1 - Math.abs(l - 50) / 50);
+        if (score > centerScore && s > 60 && l > 20 && l < 80) {
+          centerScore = score;
+          centerPixel = [r, g, b];
+        }
+      }
+
+      for (const [xRatio, yRatio] of regions) {
+        const sx = canvas.width * xRatio * 0.5;
+        const sy = canvas.height * yRatio * 0.5;
+        const region = ctx.getImageData(sx, sy, canvas.width * 0.25, canvas.height * 0.25).data;
+        for (let i = 0; i < region.length; i += 4 * 4) {
+          const r = region[i], g = region[i+1], b = region[i+2];
+          const [h, s, l] = rgbToHsl(r, g, b);
+          if (s > 20 && l > 20 && l < 90) {
+            const key = `${Math.round(r/10)*10},${Math.round(g/10)*10},${Math.round(b/10)*10}`;
+            colorCounts[key] = (colorCounts[key] || 0) + 1;
+            const pastelKey = `${Math.round(h)},${Math.round(s/10)*10},${Math.round(l/10)*10}`;
+            pastelClusters[pastelKey] = (pastelClusters[pastelKey] || 0) + 1;
+          }
+        }
+      }
+
+      let dominantColor = null, maxPastelCount = 0;
+      for (const key in pastelClusters) {
+        if (pastelClusters[key] > maxPastelCount) {
+          maxPastelCount = pastelClusters[key];
+          const [h, s, l] = key.split(',').map(Number);
+          dominantColor = hslToRgb(h, s, l);
+        }
+      }
+
+      const totalPastel = Object.values(pastelClusters).reduce((a,b) => a+b, 0);
+      const pastelPercent = maxPastelCount / totalPastel;
+
+      return pastelPercent > 0.65 ? dominantColor : centerPixel || [255, 0, 0];
     }
 
     const img = document.getElementById('cover-image');
@@ -190,76 +236,10 @@
     const wrapper = document.getElementById('price-grid-wrapper');
 
     img.crossOrigin = 'anonymous';
-
     img.onload = function () {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.drawImage(img, 0, 0);
-
-      const regions = [
-        [0.0, 0.0], [0.33, 0.0], [0.66, 0.0],
-        [0.0, 0.66], [0.33, 0.66], [0.66, 0.66]
-      ];
-
-      let bestColor = [255, 0, 0];
-      let bestScore = 0;
-
-      let pastelClusters = {};
-      let totalValidPixels = 0;
-
-      regions.forEach(([xRatio, yRatio]) => {
-        const regionW = Math.floor(canvas.width * 0.33);
-        const regionH = Math.floor(canvas.height * 0.33);
-        const x = Math.floor(canvas.width * xRatio);
-        const y = Math.floor(canvas.height * yRatio);
-        const data = ctx.getImageData(x, y, regionW, regionH).data;
-
-        for (let i = 0; i < data.length; i += 4 * 4) {
-          const r = data[i], g = data[i + 1], b = data[i + 2];
-          const [h, s, l] = rgbToHsl(r, g, b);
-
-          if (s > 20 && l > 20 && l < 90) {
-            totalValidPixels++;
-
-            const score = s * (1 - Math.abs(l - 50) / 50);
-            if (score > bestScore) {
-              bestScore = score;
-              bestColor = [r, g, b];
-            }
-
-            const key = Object.keys(pastelClusters).find(k =>
-              rgbDistance([r, g, b], k.split(',').map(Number)) < 15
-            );
-            if (key) {
-              pastelClusters[key]++;
-            } else {
-              pastelClusters[`${r},${g},${b}`] = 1;
-            }
-          }
-        }
-      });
-
-      let dominantPastel = bestColor;
-      let maxClusterCount = 0;
-      for (const k in pastelClusters) {
-        if (pastelClusters[k] > maxClusterCount) {
-          maxClusterCount = pastelClusters[k];
-          dominantPastel = k.split(',').map(Number);
-        }
-      }
-
-      const pastelRatio = maxClusterCount / totalValidPixels;
-      let final = pastelRatio > 0.65 ? dominantPastel : bestColor;
-
-      let [h, s, l] = rgbToHsl(...final);
-      s = Math.min(100, s + 20);
-      l = Math.min(90, l + 5);
-      const [rF, gF, bF] = hslToRgb(h, s, l);
-      const finalColor = `rgb(${rF}, ${gF}, ${bF})`;
-
-      wrapper.style.boxShadow = `0 0 25px rgba(${rF}, ${gF}, ${bF}, 0.5)`;
+      const [r, g, b] = analyzeImage(img);
+      const finalColor = `rgb(${r}, ${g}, ${b})`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
       button.style.backgroundColor = finalColor;
       heading.style.color = finalColor;
     };
