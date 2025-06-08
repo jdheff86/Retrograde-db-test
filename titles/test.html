@@ -189,47 +189,49 @@
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
-      const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-      let r = 0, g = 0, b = 0, count = 0;
-      let brightNeutralCount = 0;
-      let pixelCount = 0;
+      const regions = [
+        [0.0, 0.0], [0.33, 0.0], [0.66, 0.0], // top-left, top-center, top-right
+        [0.0, 0.66], [0.33, 0.66], [0.66, 0.66] // bottom-left, bottom-center, bottom-right
+      ];
 
-      // Initial scan to detect neutral pastel dominance
-      for (let i = 0; i < data.length; i += 4 * 8) {
-        const red = data[i], green = data[i + 1], blue = data[i + 2];
-        const [h, s, l] = rgbToHsl(red, green, blue);
-        if (s < 20 && l > 75) brightNeutralCount++;
-        pixelCount++;
-      }
+      const colorCounts = {};
 
-      const skipTop = brightNeutralCount / pixelCount > 0.25;
+      regions.forEach(([xRatio, yRatio]) => {
+        const regionW = canvas.width * 0.33;
+        const regionH = canvas.height * 0.33;
+        const x = Math.floor(canvas.width * xRatio);
+        const y = Math.floor(canvas.height * yRatio);
+        const data = ctx.getImageData(x, y, regionW, regionH).data;
 
-      // Main scan: skip top 15% if pastel sky dominates
-      const startY = skipTop ? Math.floor(height * 0.15) : 0;
-      const imageData = ctx.getImageData(0, startY, width, height - startY).data;
+        for (let i = 0; i < data.length; i += 4 * 4) {
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          const [h, s, l] = rgbToHsl(r, g, b);
+          if (s > 35 && l > 20 && l < 90) {
+            const key = `${r},${g},${b}`;
+            colorCounts[key] = (colorCounts[key] || 0) + 1;
+          }
+        }
+      });
 
-      for (let i = 0; i < imageData.length; i += 4 * 4) {
-        const red = imageData[i], green = imageData[i + 1], blue = imageData[i + 2];
-        const [h, s, l] = rgbToHsl(red, green, blue);
-        if (l > 20 && l < 90 && s > 30) {
-          r += red; g += green; b += blue;
-          count++;
+      let dominant = [255, 0, 0];
+      let maxCount = 0;
+
+      for (const key in colorCounts) {
+        if (colorCounts[key] > maxCount) {
+          dominant = key.split(',').map(Number);
+          maxCount = colorCounts[key];
         }
       }
 
-      if (count > 0) {
-        r = Math.round(r / count);
-        g = Math.round(g / count);
-        b = Math.round(b / count);
-        let [h, s, l] = rgbToHsl(r, g, b);
-        s = Math.min(100, s + 20);
-        l = Math.min(90, l + 5);
-        [r, g, b] = hslToRgb(h, s, l);
-      }
+      // Boost vibrancy
+      let [h, s, l] = rgbToHsl(...dominant);
+      s = Math.min(100, s + 20);
+      l = Math.min(90, l + 5);
+      const [rF, gF, bF] = hslToRgb(h, s, l);
+      const finalColor = `rgb(${rF}, ${gF}, ${bF})`;
 
-      const finalColor = `rgb(${r}, ${g}, ${b})`;
-      wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${rF}, ${gF}, ${bF}, 0.5)`;
       button.style.backgroundColor = finalColor;
       heading.style.color = finalColor;
     };
