@@ -193,32 +193,39 @@
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
 
-      const data = ctx.getImageData(
+      const imageData = ctx.getImageData(
         canvas.width * 0.3,
         canvas.height * 0.3,
         canvas.width * 0.4,
         canvas.height * 0.4
       ).data;
 
-      let topPixels = [];
+      const hueBuckets = Array(360).fill(0);
+      const pixelData = [];
 
-      for (let i = 0; i < data.length; i += 4 * 10) {
-        const r = data[i], g = data[i+1], b = data[i+2];
+      for (let i = 0; i < imageData.length; i += 4 * 5) {
+        const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2];
         const [h, s, l] = rgbToHsl(r, g, b);
-        const score = s * l;
-
-        if (s > 60 && l > 40 && l < 75) {
-          topPixels.push({ r, g, b, score });
-          topPixels.sort((a, b) => b.score - a.score);
-          if (topPixels.length > 5) topPixels.pop();
+        if (s > 50 && l > 20 && l < 80) {
+          const hue = Math.floor(h) % 360;
+          hueBuckets[hue]++;
+          pixelData.push({ r, g, b, h });
         }
       }
 
+      const dominantHue = hueBuckets.indexOf(Math.max(...hueBuckets));
+
+      const selectedPixels = pixelData.filter(p =>
+        Math.abs(p.h - dominantHue) <= 5 || Math.abs(p.h - dominantHue) >= 355
+      );
+
       let r = 180, g = 30, b = 120; // fallback
-      if (topPixels.length > 0) {
-        r = Math.round(topPixels.reduce((sum, p) => sum + p.r, 0) / topPixels.length);
-        g = Math.round(topPixels.reduce((sum, p) => sum + p.g, 0) / topPixels.length);
-        b = Math.round(topPixels.reduce((sum, p) => sum + p.b, 0) / topPixels.length);
+      if (selectedPixels.length > 0) {
+        const avg = (key) =>
+          Math.round(selectedPixels.reduce((sum, p) => sum + p[key], 0) / selectedPixels.length);
+        r = avg('r');
+        g = avg('g');
+        b = avg('b');
 
         let [h, s, l] = rgbToHsl(r, g, b);
         s = Math.min(100, s + 20);
