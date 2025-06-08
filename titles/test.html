@@ -1,4 +1,3 @@
-<!-- test.html (v1.13 logic, v1.12 layout) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,6 @@
   <title>Test Title - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
-    /* identical CSS formatting preserved */
     .price-heading {
       font-size: 1.5rem;
       margin: 2rem 0 1rem;
@@ -119,11 +117,11 @@
     </div>
 
     <div class="info-section">
-      <img id="cover-image" src="/assets/Testing.png" alt="Testing" class="main-logo" />
+      <img id="cover-image" src="/assets/pastel_test_5.png" alt="Vantibes" class="main-logo" />
       <div class="title-text">
         <h1 class="main-title">Test Title (1995)</h1>
         <p class="subtitle">Rating: 7.8</p>
-        <p class="subtitle">Genre: Adventure</p>
+        <p class="subtitle">Genre: Romance</p>
       </div>
     </div>
 
@@ -196,7 +194,6 @@
       const borderY = canvas.height * 0.05;
       const safeW = canvas.width - borderX * 2;
       const safeH = canvas.height - borderY * 2;
-
       const regionSize = 0.2;
       const regions = [
         [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
@@ -204,6 +201,7 @@
       ];
 
       let pastelPixels = [];
+      let pastelLightnessSum = 0;
       let totalValid = 0;
       let bestColor = [255, 0, 0], bestScore = 0;
 
@@ -234,7 +232,10 @@
           const [h, s, l] = rgbToHsl(r, g, b);
           if (s > 20 && l > 20 && l < 90) {
             totalValid++;
-            if (s < 60) pastelPixels.push([r, g, b]);
+            if (s < 60) {
+              pastelPixels.push([r, g, b]);
+              pastelLightnessSum += l;
+            }
             const score = s * (1 - Math.abs(l - 50) / 50);
             if (score > bestScore) {
               bestScore = score;
@@ -245,8 +246,10 @@
       });
 
       let final = bestColor;
+      const pastelRatio = pastelPixels.length / totalValid;
+      const avgPastelL = pastelLightnessSum / pastelPixels.length;
 
-      if (pastelPixels.length / totalValid > 0.65 && pastelPixels.length > 0) {
+      if (pastelRatio > 0.55 && avgPastelL > 65) {
         let r = 0, g = 0, b = 0;
         pastelPixels.forEach(([rp, gp, bp]) => {
           r += rp; g += gp; b += bp;
