@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Title - Retrograde DB</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <style>
+    .price-heading {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .price-grid-wrapper {
+      background-color: #111;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+      max-width: 640px;
+      margin: 1rem auto 2rem;
+      transition: box-shadow 0.3s;
+    }
+
+    .price-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .price-card {
+      background-color: #111;
+      color: #fff;
+      padding: 10px 0;
+      border-radius: 8px;
+      width: 30%;
+      min-width: 90px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .grade {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .value {
+      font-size: 0.9rem;
+      margin-top: 6px;
+      color: #ccc;
+    }
+
+    .info-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+      max-width: 700px;
+      margin-inline: auto;
+    }
+
+    .main-logo {
+      width: 100px;
+      height: auto;
+    }
+
+    .title-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-title {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #ff4444;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 1rem auto;
+      transition: background-color 0.3s;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .cta-button:hover {
+      background-color: #e12a2a;
+    }
+
+    .centered-button {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="menu-icon">☰</div>
+    <div class="site-title">RETROGRADE DATA BASE</div>
+    <div class="search-icon">🔍</div>
+  </header>
+
+  <main class="home-container">
+    <div class="centered-button">
+      <a href="/titles/index.html" class="cta-button" id="back-button">← Back to Titles</a>
+    </div>
+
+    <div class="info-section">
+      <img id="cover-image" src="/assets/Testing4.png" alt="VHS Cover" class="main-logo" />
+      <div class="title-text">
+        <h1 class="main-title">Test Title (1995)</h1>
+        <p class="subtitle">Rating: 7.8</p>
+        <p class="subtitle">Genre: Romance</p>
+      </div>
+    </div>
+
+    <h2 class="price-heading" id="price-heading">Current Market Prices</h2>
+
+    <div class="price-grid-wrapper" id="price-grid-wrapper">
+      <div class="price-grid">
+        <div class="price-card"><div class="grade">Raw</div><div class="value">$20</div></div>
+        <div class="price-card"><div class="grade">7.0</div><div class="value">$35</div></div>
+        <div class="price-card"><div class="grade">8.0</div><div class="value">$48</div></div>
+        <div class="price-card"><div class="grade">9.0</div><div class="value">$75</div></div>
+        <div class="price-card"><div class="grade">9.5</div><div class="value">$90</div></div>
+        <div class="price-card"><div class="grade">10.0</div><div class="value">$130</div></div>
+      </div>
+    </div>
+
+    <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
+  </main>
+
+  <script>
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) return [0, 0, l * 100];
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      return [h * 60, s * 100, l * 100];
+    }
+
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      return [
+        Math.round(hue2rgb(p, q, h + 1/3) * 255),
+        Math.round(hue2rgb(p, q, h) * 255),
+        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+      ];
+    }
+
+    const img = document.getElementById('cover-image');
+    const button = document.getElementById('back-button');
+    const heading = document.getElementById('price-heading');
+    const wrapper = document.getElementById('price-grid-wrapper');
+    img.crossOrigin = 'anonymous';
+
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const borderX = canvas.width * 0.05;
+      const borderY = canvas.height * 0.05;
+      const safeW = canvas.width - borderX * 2;
+      const safeH = canvas.height - borderY * 2;
+      const regionSize = 0.2;
+      const regions = [
+        [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+        [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+      ];
+
+      let pastelPixels = [];
+      let pastelLightnessSum = 0;
+      let totalValid = 0;
+      let bestColor = [255, 0, 0], bestScore = 0, bestCount = 0;
+      const colorCounts = {};
+
+      const centerSize = 0.15;
+      const cW = canvas.width * centerSize;
+      const cH = canvas.height * centerSize;
+      const cx = (canvas.width - cW) / 2;
+      const cy = (canvas.height - cH) / 2;
+      const centerData = ctx.getImageData(cx, cy, cW, cH).data;
+      let centerColor = null;
+      let centerScore = 0;
+      for (let i = 0; i < centerData.length; i += 4) {
+        const r = centerData[i], g = centerData[i+1], b = centerData[i+2];
+        const [h, s, l] = rgbToHsl(r, g, b);
+        const score = s * (1 - Math.abs(l - 50) / 50);
+        if (s > 60 && l > 20 && l < 80 && score > centerScore) {
+          centerScore = score;
+          centerColor = [r, g, b];
+        }
+      }
+
+      regions.forEach(([xRatio, yRatio]) => {
+        const x = borderX + (safeW * xRatio) - (safeW * regionSize / 2);
+        const y = borderY + (safeH * yRatio) - (safeH * regionSize / 2);
+        const data = ctx.getImageData(x, y, safeW * regionSize, safeH * regionSize).data;
+        for (let i = 0; i < data.length; i += 16) {
+          const r = data[i], g = data[i+1], b = data[i+2];
+          const [h, s, l] = rgbToHsl(r, g, b);
+          if (s > 20 && l > 20 && l < 90) {
+            totalValid++;
+            if (s < 60) {
+              pastelPixels.push([r, g, b]);
+              pastelLightnessSum += l;
+            }
+            const score = s * (1 - Math.abs(l - 50) / 50);
+            const key = `${r},${g},${b}`;
+            colorCounts[key] = (colorCounts[key] || 0) + 1;
+            const count = colorCounts[key];
+            if (score > bestScore || (Math.abs(score - bestScore) <= bestScore * 0.1 && count > bestCount)) {
+              bestScore = score;
+              bestCount = count;
+              bestColor = [r, g, b];
+            }
+          }
+        }
+      });
+
+      let final = bestColor;
+      const pastelRatio = pastelPixels.length / totalValid;
+      const avgPastelL = pastelLightnessSum / pastelPixels.length;
+      if (pastelRatio > 0.55 && avgPastelL > 65) {
+        let r = 0, g = 0, b = 0;
+        pastelPixels.forEach(([rp, gp, bp]) => {
+          r += rp; g += gp; b += bp;
+        });
+        final = [Math.round(r / pastelPixels.length), Math.round(g / pastelPixels.length), Math.round(b / pastelPixels.length)];
+      }
+      if (centerColor && centerScore >= bestScore * 0.9) {
+        final = centerColor;
+      }
+
+      let [h, s, l] = rgbToHsl(...final);
+      s = Math.min(100, s + 20);
+      l = Math.min(90, l + 5);
+      const [rF, gF, bF] = hslToRgb(h, s, l);
+      const finalColor = `rgb(${rF}, ${gF}, ${bF})`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${rF}, ${gF}, ${bF}, 0.5)`;
+      button.style.backgroundColor = finalColor;
+      heading.style.color = finalColor;
+    };
+  </script>
+</body>
+</html>
