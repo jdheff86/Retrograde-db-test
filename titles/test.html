@@ -1,4 +1,4 @@
-<!-- FULL test.html (v1.12) -->
+<!-- test.html (v1.13 logic, v1.12 layout) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -197,6 +197,7 @@
       const safeW = canvas.width - borderX * 2;
       const safeH = canvas.height - borderY * 2;
 
+      const regionSize = 0.2;
       const regions = [
         [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
         [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
@@ -206,7 +207,6 @@
       let totalValid = 0;
       let bestColor = [255, 0, 0], bestScore = 0;
 
-      // Center override
       const centerSize = 0.15;
       const cW = canvas.width * centerSize;
       const cH = canvas.height * centerSize;
@@ -225,11 +225,10 @@
         }
       }
 
-      // Region sampling (excluding border)
       regions.forEach(([xRatio, yRatio]) => {
-        const x = borderX + (safeW * xRatio * 0.5);
-        const y = borderY + (safeH * yRatio * 0.5);
-        const data = ctx.getImageData(x, y, safeW * 0.33, safeH * 0.33).data;
+        const x = borderX + (safeW * xRatio) - (safeW * regionSize / 2);
+        const y = borderY + (safeH * yRatio) - (safeH * regionSize / 2);
+        const data = ctx.getImageData(x, y, safeW * regionSize, safeH * regionSize).data;
         for (let i = 0; i < data.length; i += 4 * 4) {
           const r = data[i], g = data[i+1], b = data[i+2];
           const [h, s, l] = rgbToHsl(r, g, b);
@@ -246,6 +245,7 @@
       });
 
       let final = bestColor;
+
       if (pastelPixels.length / totalValid > 0.65 && pastelPixels.length > 0) {
         let r = 0, g = 0, b = 0;
         pastelPixels.forEach(([rp, gp, bp]) => {
@@ -257,7 +257,7 @@
         final = [r, g, b];
       }
 
-      if (centerColor && centerScore > bestScore) {
+      if (centerColor && centerScore >= bestScore * 0.9) {
         final = centerColor;
       }
 
