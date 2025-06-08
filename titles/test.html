@@ -1,3 +1,4 @@
+<!-- FULL test.html (v1.12) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
   <title>Test Title - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
+    /* identical CSS formatting preserved */
     .price-heading {
       font-size: 1.5rem;
       margin: 2rem 0 1rem;
@@ -190,24 +192,29 @@
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
 
+      const borderX = canvas.width * 0.05;
+      const borderY = canvas.height * 0.05;
+      const safeW = canvas.width - borderX * 2;
+      const safeH = canvas.height - borderY * 2;
+
       const regions = [
-        [0.0, 0.0], [0.33, 0.0], [0.66, 0.0],
-        [0.0, 0.66], [0.33, 0.66], [0.66, 0.66]
+        [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+        [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
       ];
 
       let pastelPixels = [];
       let totalValid = 0;
       let bestColor = [255, 0, 0], bestScore = 0;
 
+      // Center override
+      const centerSize = 0.15;
+      const cW = canvas.width * centerSize;
+      const cH = canvas.height * centerSize;
+      const cx = (canvas.width - cW) / 2;
+      const cy = (canvas.height - cH) / 2;
+      const centerData = ctx.getImageData(cx, cy, cW, cH).data;
       let centerColor = null;
       let centerScore = 0;
-
-      // 1. Center override region
-      const centerW = Math.floor(canvas.width * 0.15);
-      const centerH = Math.floor(canvas.height * 0.15);
-      const cx = Math.floor((canvas.width - centerW) / 2);
-      const cy = Math.floor((canvas.height - centerH) / 2);
-      const centerData = ctx.getImageData(cx, cy, centerW, centerH).data;
       for (let i = 0; i < centerData.length; i += 4) {
         const r = centerData[i], g = centerData[i+1], b = centerData[i+2];
         const [h, s, l] = rgbToHsl(r, g, b);
@@ -218,21 +225,17 @@
         }
       }
 
-      // 2. Main region sampling
+      // Region sampling (excluding border)
       regions.forEach(([xRatio, yRatio]) => {
-        const regionW = Math.floor(canvas.width * 0.33);
-        const regionH = Math.floor(canvas.height * 0.33);
-        const x = Math.floor(canvas.width * xRatio);
-        const y = Math.floor(canvas.height * yRatio);
-        const data = ctx.getImageData(x, y, regionW, regionH).data;
-
+        const x = borderX + (safeW * xRatio * 0.5);
+        const y = borderY + (safeH * yRatio * 0.5);
+        const data = ctx.getImageData(x, y, safeW * 0.33, safeH * 0.33).data;
         for (let i = 0; i < data.length; i += 4 * 4) {
-          const r = data[i], g = data[i + 1], b = data[i + 2];
+          const r = data[i], g = data[i+1], b = data[i+2];
           const [h, s, l] = rgbToHsl(r, g, b);
           if (s > 20 && l > 20 && l < 90) {
             totalValid++;
             if (s < 60) pastelPixels.push([r, g, b]);
-
             const score = s * (1 - Math.abs(l - 50) / 50);
             if (score > bestScore) {
               bestScore = score;
@@ -242,12 +245,11 @@
         }
       });
 
-      // 3. Evaluate pastel average if dominant
       let final = bestColor;
       if (pastelPixels.length / totalValid > 0.65 && pastelPixels.length > 0) {
         let r = 0, g = 0, b = 0;
-        pastelPixels.forEach(p => {
-          r += p[0]; g += p[1]; b += p[2];
+        pastelPixels.forEach(([rp, gp, bp]) => {
+          r += rp; g += gp; b += bp;
         });
         r = Math.round(r / pastelPixels.length);
         g = Math.round(g / pastelPixels.length);
@@ -255,7 +257,6 @@
         final = [r, g, b];
       }
 
-      // 4. Center override wins if stronger
       if (centerColor && centerScore > bestScore) {
         final = centerColor;
       }
