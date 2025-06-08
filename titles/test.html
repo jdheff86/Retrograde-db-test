@@ -164,15 +164,15 @@
       const hue2rgb = (p, q, t) => {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
       };
       return [
-        Math.round(hue2rgb(p, q, h + 1/3) * 255),
+        Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
         Math.round(hue2rgb(p, q, h) * 255),
-        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+        Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
       ];
     }
 
@@ -191,15 +191,16 @@
       ctx.drawImage(img, 0, 0);
 
       const regions = [
-        [0.0, 0.0], [0.33, 0.0], [0.66, 0.0], // top-left, top-center, top-right
-        [0.0, 0.66], [0.33, 0.66], [0.66, 0.66] // bottom-left, bottom-center, bottom-right
+        [0.0, 0.0], [0.33, 0.0], [0.66, 0.0],
+        [0.0, 0.66], [0.33, 0.66], [0.66, 0.66]
       ];
 
-      const colorCounts = {};
+      let bestColor = [255, 0, 0];
+      let bestScore = 0;
 
       regions.forEach(([xRatio, yRatio]) => {
-        const regionW = canvas.width * 0.33;
-        const regionH = canvas.height * 0.33;
+        const regionW = Math.floor(canvas.width * 0.33);
+        const regionH = Math.floor(canvas.height * 0.33);
         const x = Math.floor(canvas.width * xRatio);
         const y = Math.floor(canvas.height * yRatio);
         const data = ctx.getImageData(x, y, regionW, regionH).data;
@@ -207,25 +208,16 @@
         for (let i = 0; i < data.length; i += 4 * 4) {
           const r = data[i], g = data[i + 1], b = data[i + 2];
           const [h, s, l] = rgbToHsl(r, g, b);
-          if (s > 35 && l > 20 && l < 90) {
-            const key = `${r},${g},${b}`;
-            colorCounts[key] = (colorCounts[key] || 0) + 1;
+          const score = s * (l / 100); // high saturation * lightness
+
+          if (s > 30 && l > 20 && l < 90 && score > bestScore) {
+            bestScore = score;
+            bestColor = [r, g, b];
           }
         }
       });
 
-      let dominant = [255, 0, 0];
-      let maxCount = 0;
-
-      for (const key in colorCounts) {
-        if (colorCounts[key] > maxCount) {
-          dominant = key.split(',').map(Number);
-          maxCount = colorCounts[key];
-        }
-      }
-
-      // Boost vibrancy
-      let [h, s, l] = rgbToHsl(...dominant);
+      let [h, s, l] = rgbToHsl(...bestColor);
       s = Math.min(100, s + 20);
       l = Math.min(90, l + 5);
       const [rF, gF, bF] = hslToRgb(h, s, l);
