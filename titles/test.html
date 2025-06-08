@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Test Title - Retrograde DB</title>
+  <title>Steel Reckoning - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
     .price-heading {
@@ -12,7 +12,6 @@
       font-weight: bold;
       transition: color 0.3s;
     }
-
     .price-grid-wrapper {
       background-color: #111;
       border-radius: 16px;
@@ -22,14 +21,12 @@
       margin: 1rem auto 2rem;
       transition: box-shadow 0.3s;
     }
-
     .price-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
     }
-
     .price-card {
       background-color: #111;
       color: #fff;
@@ -39,18 +36,15 @@
       min-width: 90px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
-
     .grade {
       font-weight: bold;
       font-size: 1rem;
     }
-
     .value {
       font-size: 0.9rem;
       margin-top: 6px;
       color: #ccc;
     }
-
     .info-section {
       display: flex;
       align-items: center;
@@ -60,28 +54,23 @@
       max-width: 700px;
       margin-inline: auto;
     }
-
     .main-logo {
       width: 100px;
       height: auto;
     }
-
     .title-text {
       display: flex;
       flex-direction: column;
     }
-
     .main-title {
       font-size: 1.8rem;
       margin-bottom: 5px;
     }
-
     .subtitle {
       font-size: 1rem;
       color: #ccc;
       margin: 0;
     }
-
     .cta-button {
       display: inline-block;
       background-color: #ff4444;
@@ -94,11 +83,9 @@
       transition: background-color 0.3s;
       text-shadow: 1px 1px 2px black;
     }
-
     .cta-button:hover {
       background-color: #e12a2a;
     }
-
     .centered-button {
       text-align: center;
     }
@@ -128,11 +115,11 @@
     </div>
 
     <div class="info-section">
-      <img id="cover-image" src="../assets/Testing.png" alt="Laser Samurai 2099" class="main-logo" />
+      <img id="cover-image" src="../assets/Testing.png" alt="Steel Reckoning" class="main-logo" />
       <div class="title-text">
-        <h1 class="main-title">Test Title (1995)</h1>
+        <h1 class="main-title">Steel Reckoning</h1>
         <p class="subtitle">Rating: 7.8</p>
-        <p class="subtitle">Genre: Comedy</p>
+        <p class="subtitle">Genre: Sci-Fi</p>
       </div>
     </div>
 
@@ -207,41 +194,39 @@
       ctx.drawImage(img, 0, 0);
 
       const data = ctx.getImageData(
-        canvas.width * 0.25,
-        canvas.height * 0.25,
-        canvas.width * 0.5,
-        canvas.height * 0.5
+        canvas.width * 0.3,
+        canvas.height * 0.3,
+        canvas.width * 0.4,
+        canvas.height * 0.4
       ).data;
 
-      let r = 0, g = 0, b = 0, count = 0;
-      let maxScore = 0;
+      let topPixels = [];
 
       for (let i = 0; i < data.length; i += 4 * 10) {
-        const red = data[i];
-        const green = data[i + 1];
-        const blue = data[i + 2];
-
-        const [h, s, l] = rgbToHsl(red, green, blue);
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const [h, s, l] = rgbToHsl(r, g, b);
         const score = s * l;
 
-        if (s > 60 && l > 40 && l < 75 && score > maxScore) {
-          maxScore = score;
-          r = red;
-          g = green;
-          b = blue;
+        if (s > 60 && l > 40 && l < 75) {
+          topPixels.push({ r, g, b, score });
+          topPixels.sort((a, b) => b.score - a.score);
+          if (topPixels.length > 5) topPixels.pop();
         }
       }
 
-      let finalColor = `rgb(${r}, ${g}, ${b})`;
+      let r = 180, g = 30, b = 120; // fallback
+      if (topPixels.length > 0) {
+        r = Math.round(topPixels.reduce((sum, p) => sum + p.r, 0) / topPixels.length);
+        g = Math.round(topPixels.reduce((sum, p) => sum + p.g, 0) / topPixels.length);
+        b = Math.round(topPixels.reduce((sum, p) => sum + p.b, 0) / topPixels.length);
 
-      if (maxScore > 0) {
         let [h, s, l] = rgbToHsl(r, g, b);
         s = Math.min(100, s + 20);
         l = Math.min(90, l + 10);
         [r, g, b] = hslToRgb(h, s, l);
-        finalColor = `rgb(${r}, ${g}, ${b})`;
       }
 
+      const finalColor = `rgb(${r}, ${g}, ${b})`;
       wrapper.style.boxShadow = `0 0 25px rgba(${r}, ${g}, ${b}, 0.5)`;
       button.style.backgroundColor = finalColor;
       heading.style.color = finalColor;
