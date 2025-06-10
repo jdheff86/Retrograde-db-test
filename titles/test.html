@@ -6,6 +6,10 @@
   <title>Test Title - Retrograde DB</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
+    :root {
+      --glow-color: rgba(255, 100, 0, 0.8); /* fallback */
+    }
+
     .price-heading {
       font-size: 1.5rem;
       margin: 2rem 0 1rem;
@@ -74,6 +78,7 @@
     .main-title {
       font-size: 1.8rem;
       margin-bottom: 5px;
+      animation: pulseGlow 3s ease-in-out infinite;
       transition: text-shadow 0.3s;
     }
 
@@ -102,6 +107,12 @@
 
     .centered-button {
       text-align: center;
+    }
+
+    @keyframes pulseGlow {
+      0%   { text-shadow: 0 0 4px var(--glow-color), 0 0 8px var(--glow-color); }
+      50%  { text-shadow: 0 0 12px var(--glow-color), 0 0 20px var(--glow-color); }
+      100% { text-shadow: 0 0 4px var(--glow-color), 0 0 8px var(--glow-color); }
     }
   </style>
 </head>
@@ -272,7 +283,7 @@
       wrapper.style.boxShadow = `0 0 25px rgba(${rF}, ${gF}, ${bF}, 0.5)`;
       button.style.backgroundColor = finalColor;
       heading.style.color = finalColor;
-      document.querySelector('.main-title').style.textShadow = `0 0 8px rgba(${rF}, ${gF}, ${bF}, 0.8)`;
+      document.documentElement.style.setProperty('--glow-color', `rgba(${rF}, ${gF}, ${bF}, 0.8)`);
     };
   </script>
 </body>
