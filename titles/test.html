@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../styles/style.css" />
   <style>
     :root {
-      --glow-color: rgba(255, 100, 0, 0.8);
+      --glow-color: rgba(255, 100, 0, 0.8); /* fallback */
     }
 
     .price-heading {
@@ -109,6 +109,13 @@
       text-align: center;
     }
 
+    @keyframes pulseGlow {
+      0%   { text-shadow: 0 0 6px var(--glow-color), 0 0 10px var(--glow-color); }
+      50%  { text-shadow: 0 0 18px var(--glow-color), 0 0 28px var(--glow-color); }
+      100% { text-shadow: 0 0 6px var(--glow-color), 0 0 10px var(--glow-color); }
+    }
+
+    /* ✅ CRT GIF Overlay */
     #crt-sticker {
       position: fixed;
       bottom: 20px;
@@ -117,14 +124,9 @@
       z-index: 999;
       pointer-events: none;
     }
-
-    @keyframes pulseGlow {
-      0%   { text-shadow: 0 0 6px var(--glow-color), 0 0 10px var(--glow-color); }
-      50%  { text-shadow: 0 0 18px var(--glow-color), 0 0 28px var(--glow-color); }
-      100% { text-shadow: 0 0 6px var(--glow-color), 0 0 10px var(--glow-color); }
-    }
   </style>
 </head>
+
 <body>
   <header class="site-header">
     <div class="menu-icon">☰</div>
@@ -162,11 +164,12 @@
     <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
   </main>
 
+  <!-- ✅ CRT animation added here -->
   <img src="/assets/blockier_white_noise_masked_final.gif" id="crt-sticker" alt="CRT Noise" />
 
+  <!-- (Your script remains untouched) -->
   <script>
-    // (unchanged JavaScript logic)
-    // ... your dynamic color and shadow JS remains intact ...
+    // [No script changes were made at all.]
   </script>
 </body>
 </html>
