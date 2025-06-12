@@ -115,18 +115,16 @@
       100% { text-shadow: 0 0 6px var(--glow-color), 0 0 10px var(--glow-color); }
     }
 
-    /* ✅ CRT GIF Overlay */
     #crt-sticker {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 150px;
+      width: 127px;
       z-index: 999;
       pointer-events: none;
     }
   </style>
 </head>
-
 <body>
   <header class="site-header">
     <div class="menu-icon">☰</div>
@@ -164,12 +162,142 @@
     <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
   </main>
 
-  <!-- ✅ CRT animation added here -->
+  <!-- ✅ CRT Overlay -->
   <img src="/assets/blockier_white_noise_masked_final.gif" id="crt-sticker" alt="CRT Noise" />
 
-  <!-- (Your script remains untouched) -->
+  <!-- ✅ Original Color Picker Algorithm -->
   <script>
-    // [No script changes were made at all.]
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) return [0, 0, l * 100];
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      return [h * 60, s * 100, l * 100];
+    }
+
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      return [
+        Math.round(hue2rgb(p, q, h + 1/3) * 255),
+        Math.round(hue2rgb(p, q, h) * 255),
+        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+      ];
+    }
+
+    const img = document.getElementById('cover-image');
+    const button = document.getElementById('back-button');
+    const heading = document.getElementById('price-heading');
+    const wrapper = document.getElementById('price-grid-wrapper');
+    img.crossOrigin = 'anonymous';
+
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const borderX = canvas.width * 0.05;
+      const borderY = canvas.height * 0.05;
+      const safeW = canvas.width - borderX * 2;
+      const safeH = canvas.height - borderY * 2;
+      const regionSize = 0.2;
+      const regions = [
+        [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+        [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+      ];
+
+      let pastelPixels = [];
+      let pastelLightnessSum = 0;
+      let totalValid = 0;
+      let bestColor = [255, 0, 0], bestScore = 0, bestCount = 0;
+      const colorCounts = {};
+
+      const centerSize = 0.15;
+      const cW = canvas.width * centerSize;
+      const cH = canvas.height * centerSize;
+      const cx = (canvas.width - cW) / 2;
+      const cy = (canvas.height - cH) / 2;
+      const centerData = ctx.getImageData(cx, cy, cW, cH).data;
+      let centerColor = null;
+      let centerScore = 0;
+      for (let i = 0; i < centerData.length; i += 4) {
+        const r = centerData[i], g = centerData[i+1], b = centerData[i+2];
+        const [h, s, l] = rgbToHsl(r, g, b);
+        const score = s * (1 - Math.abs(l - 50) / 50);
+        if (s > 60 && l > 20 && l < 80 && score > centerScore) {
+          centerScore = score;
+          centerColor = [r, g, b];
+        }
+      }
+
+      regions.forEach(([xRatio, yRatio]) => {
+        const x = borderX + (safeW * xRatio) - (safeW * regionSize / 2);
+        const y = borderY + (safeH * yRatio) - (safeH * regionSize / 2);
+        const data = ctx.getImageData(x, y, safeW * regionSize, safeH * regionSize).data;
+        for (let i = 0; i < data.length; i += 16) {
+          const r = data[i], g = data[i+1], b = data[i+2];
+          const [h, s, l] = rgbToHsl(r, g, b);
+          if (s > 20 && l > 20 && l < 90) {
+            totalValid++;
+            if (s < 60) {
+              pastelPixels.push([r, g, b]);
+              pastelLightnessSum += l;
+            }
+            const score = s * (1 - Math.abs(l - 50) / 50);
+            const key = `${r},${g},${b}`;
+            colorCounts[key] = (colorCounts[key] || 0) + 1;
+            const count = colorCounts[key];
+            if (score > bestScore || (Math.abs(score - bestScore) <= bestScore * 0.1 && count > bestCount)) {
+              bestScore = score;
+              bestCount = count;
+              bestColor = [r, g, b];
+            }
+          }
+        }
+      });
+
+      let final = bestColor;
+      const pastelRatio = pastelPixels.length / totalValid;
+      const avgPastelL = pastelLightnessSum / pastelPixels.length;
+      if (pastelRatio > 0.55 && avgPastelL > 65) {
+        let r = 0, g = 0, b = 0;
+        pastelPixels.forEach(([rp, gp, bp]) => {
+          r += rp; g += gp; b += bp;
+        });
+        final = [Math.round(r / pastelPixels.length), Math.round(g / pastelPixels.length), Math.round(b / pastelPixels.length)];
+      }
+      if (centerColor && centerScore >= bestScore * 0.9) {
+        final = centerColor;
+      }
+
+      let [h, s, l] = rgbToHsl(...final);
+      s = Math.min(100, s + 20);
+      l = Math.min(90, l + 5);
+      const [rF, gF, bF] = hslToRgb(h, s, l);
+      const finalColor = `rgb(${rF}, ${gF}, ${bF})`;
+      wrapper.style.boxShadow = `0 0 25px rgba(${rF}, ${gF}, ${bF}, 0.5)`;
+      button.style.backgroundColor = finalColor;
+      heading.style.color = finalColor;
+      document.documentElement.style.setProperty('--glow-color', `rgba(${rF}, ${gF}, ${bF}, 0.8)`);
+    };
   </script>
 </body>
 </html>
