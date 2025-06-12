@@ -68,6 +68,7 @@
     .main-logo {
       width: 100px;
       height: auto;
+      cursor: pointer;
     }
 
     .title-text {
@@ -123,8 +124,40 @@
       z-index: 999;
       pointer-events: none;
     }
+
+    /* 🔍 Fullscreen modal image overlay */
+    #image-modal {
+      display: none;
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      z-index: 9999;
+    }
   </style>
 </head>
+
 <body>
   <header class="site-header">
     <div class="menu-icon">☰</div>
@@ -138,7 +171,7 @@
     </div>
 
     <div class="info-section">
-      <img id="cover-image" src="/assets/Testing.png" alt="VHS Cover" class="main-logo" />
+      <img id="cover-image" src="/assets/Testing.png" alt="VHS Cover" class="main-logo" onclick="openImageModal()" />
       <div class="title-text">
         <h1 class="main-title">Test Title (1995)</h1>
         <p class="subtitle">Rating: 7.8</p>
@@ -162,11 +195,26 @@
     <p class="subtitle" style="text-align: center;">This is a sample VHS entry with mock pricing data for layout testing.</p>
   </main>
 
-  <!-- ✅ CRT Overlay -->
+  <!-- CRT overlay -->
   <img src="/assets/blockier_white_noise_masked_final.gif" id="crt-sticker" alt="CRT Noise" />
 
-  <!-- ✅ Original Color Picker Algorithm -->
+  <!-- Fullscreen image modal -->
+  <div id="image-modal" onclick="closeImageModal()">
+    <img id="modal-image" src="/assets/Testing.png" alt="Zoomed VHS Cover" />
+    <span class="close-btn" onclick="closeImageModal(event)">✕</span>
+  </div>
+
+  <!-- Color picker + modal script -->
   <script>
+    function openImageModal() {
+      document.getElementById('image-modal').style.display = 'flex';
+    }
+
+    function closeImageModal(event) {
+      if (event) event.stopPropagation();
+      document.getElementById('image-modal').style.display = 'none';
+    }
+
     function rgbToHsl(r, g, b) {
       r /= 255; g /= 255; b /= 255;
       const max = Math.max(r, g, b), min = Math.min(r, g, b);
